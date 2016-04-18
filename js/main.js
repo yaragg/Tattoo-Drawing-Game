@@ -2,6 +2,7 @@ var app = app || {};
 
 app.main = {
     game: undefined,
+    ui : undefined,
     width: 800,
     height: 600,
 

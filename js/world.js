@@ -5,6 +5,7 @@ var world = function(game){
     var bmcanvas;
     var bmworld;
     var lastPosition;
+    var emitter;
 };
 
 world.prototype = {
@@ -33,6 +34,16 @@ world.prototype = {
         bmcanvas.smoothed = false;
 
         this.game.input.addMoveCallback(this.paint, this);
+
+        this.emitter = this.game.add.emitter(0, 0, 100);
+        this.emitter.makeParticles(['loop']);
+        // this.cursor = this.game.add.sprite('loop');
+        this.emitter.setAlpha(1, 0, 3000);
+        this.emitter.setScale(0.2, 0.5, 0.2, 0.5, 1000);
+        this.emitter.minParticleSpeed = new Phaser.Point(-250,-250);
+        this.emitter.maxParticleSpeed = new Phaser.Point(250,250);
+        // this.emitter.start();
+        this.emitter.flow(500, 100, 100, -1, true);
     },
 
     paint: function (pointer, x, y) {
@@ -44,8 +55,13 @@ world.prototype = {
             loop.tint = (colors[i].r << 16) | (colors[i].g << 8) | colors[i].b;
             i = this.game.math.wrapValue(i, 1, 359);
 
+        
+            for(var j=0; j<this.emitter.children.length; j++) this.emitter.children[j].tint = loop.tint;
+
             var position = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
-            
+            this.emitter.x = position.x;
+            this.emitter.y = position.y;   
+            console.log(this.emitter); 
 
             var tween = this.game.make.tween(lastPosition).to(position);
             var path = tween.generateData(60);
