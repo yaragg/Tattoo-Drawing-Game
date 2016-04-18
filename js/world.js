@@ -15,8 +15,7 @@ world.prototype = {
     },
     
     create: function(){
-        //TODO remove this when there is a background image
-        this.game.stage.backgroundColor = "#FFFFFF";
+        
 
         lastPosition = null;
 
@@ -59,15 +58,24 @@ world.prototype = {
 
             // bmcanvas.path(loop, x, y, null, null, '');
 
-            //loop.scale.set(loop.scale.x - 0.05*(this.game.time.elapsed/1000));
+            loop.scale.set(loop.scale.x - 0.05*(this.game.time.elapsed/1000));
         }
     },
 
     update: function() {
 
-        
+        if (loop.scale.x <= 0) {
+			this.endLevel(false);
+		}
 
-    }
+    },
+	
+	endLevel: function(wonLevel) {
+		//move to game over
+		this.game.state.clearCurrentState();
+		this.game.state.start("EndLevel", wonLevel);
+		
+	}
 
 };
 

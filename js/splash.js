@@ -16,8 +16,14 @@ splash.prototype = {
     },
 
     create: function(){
-        var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
+		//TODO remove this when there is a background image
+        this.game.stage.backgroundColor = "#FFFFFF";
+		
+        var style = { font: "32px Arial", fill: "#000000", align: "center"};
+
+		var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, "Tattoo Game", style);
+		text.anchor.set(0.5);
+		
         var playButton = this.game.add.button(this.game.world.centerX,
                                                 this.game.world.height -50,"play",this.onPlayClicked,this);
         playButton.anchor.setTo(0.5,0.5);
