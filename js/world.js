@@ -5,7 +5,8 @@ var world = function(game){
     var bmcanvas;
     var bmworld;
     var lastPosition;
-    var emitter;
+    var cursorLoop;
+    var cursorEmitter;
 };
 
 world.prototype = {
@@ -35,18 +36,28 @@ world.prototype = {
 
         this.game.input.addMoveCallback(this.paint, this);
 
-        this.emitter = this.game.add.emitter(0, 0, 100);
-        this.emitter.makeParticles(['loop']);
+        cursorLoop = this.game.add.sprite(0, 0, 'loop');
+        cursorLoop.scale.set(0.5);
+        cursorLoop.anchor.set(0.5);
+
+        emitter = this.game.add.emitter(0, 0, 100);
+        emitter.makeParticles(['loop']);
         // this.cursor = this.game.add.sprite('loop');
-        this.emitter.setAlpha(1, 0, 3000);
-        this.emitter.setScale(0.2, 0.5, 0.2, 0.5, 1000);
-        this.emitter.minParticleSpeed = new Phaser.Point(-250,-250);
-        this.emitter.maxParticleSpeed = new Phaser.Point(250,250);
-        // this.emitter.start();
-        this.emitter.flow(500, 100, 100, -1, true);
+        emitter.setAlpha(1, 0, 3000);
+        emitter.setScale(0.02, 0.1, 0.02, 0.1, 1000);
+        emitter.minParticleSpeed = new Phaser.Point(-100,-100);
+        emitter.maxParticleSpeed = new Phaser.Point(100,100);
+        // emitter.start();
+        emitter.flow(500, 100, 100, -1, true);
     },
 
     paint: function (pointer, x, y) {
+            var position = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
+            emitter.position.x = position.x;
+            emitter.position.y = position.y; 
+            cursorLoop.position.x = position.x;  
+            cursorLoop.position.y = position.y;
+
         if (pointer.isDown) {
             lastPosition = lastPosition || new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
 
@@ -56,19 +67,17 @@ world.prototype = {
             i = this.game.math.wrapValue(i, 1, 359);
 
         
-            for(var j=0; j<this.emitter.children.length; j++) this.emitter.children[j].tint = loop.tint;
+            for(var j=0; j<emitter.children.length; j++) emitter.children[j].tint = loop.tint;
+            cursorLoop.tint = loop.tint;
 
-            var position = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
-            this.emitter.x = position.x;
-            this.emitter.y = position.y;   
-            console.log(this.emitter); 
+
+            console.log(emitter); 
 
             var tween = this.game.make.tween(lastPosition).to(position);
             var path = tween.generateData(60);
 
             for(var j=0; j<path.length; j++) {
                 bmcanvas.draw(loop, path[j].x, path[j].y, null, null, '');
-
             }
             lastPosition = position;
 
