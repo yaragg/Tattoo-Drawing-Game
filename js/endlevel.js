@@ -20,13 +20,17 @@ endLevel.prototype = {
 		
 		var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, tString, style);
 		text.anchor.set(0.5);
-		
+
         var playButton = this.game.add.button(this.game.world.centerX,
-                                                this.game.world.height -50,"play",this.onPlayClicked,this);
+            this.game.world.height -50,"button",this.onPlayClicked,this);
         playButton.anchor.setTo(0.5,0.5);
+
+        style = { font: "24px Arial", fill: "#000000", align: "center"};
+        text = this.game.add.text(playButton.x, playButton.y, "Back To Menu", style);
+        text.anchor.set(0.5);
     },
     onPlayClicked: function(){
         //TODO go back to level select here
         this.game.state.start("Splash");
     }
-}
+};

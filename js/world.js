@@ -11,6 +11,7 @@ world.prototype = {
     
     preload: function () {
         //TODO move this to load screen
+        this.game.load.json(currentLevel, 'assets/levels/'+currentLevel+'.json');
         this.game.load.image('loop', 'assets/brush.png');
     },
     
@@ -38,8 +39,7 @@ world.prototype = {
         if (pointer.isDown) {
             lastPosition = lastPosition || new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
 
-            //bmcanvas.circle(x, y, 4, colors[i].rgba);
-            //console.log(colors[i]);
+
             loop.tint = (colors[i].r << 16) | (colors[i].g << 8) | colors[i].b;
             i = this.game.math.wrapValue(i, 1, 359);
 
@@ -55,9 +55,6 @@ world.prototype = {
             }
             lastPosition = position;
 
-
-            // bmcanvas.path(loop, x, y, null, null, '');
-
             loop.scale.set(loop.scale.x - 0.05*(this.game.time.elapsed/1000));
         }
     },
@@ -71,10 +68,26 @@ world.prototype = {
     },
 	
 	endLevel: function(wonLevel) {
-		//move to game over
-		this.game.state.clearCurrentState();
-		this.game.state.start("EndLevel", wonLevel);
-		
+
+        
+        //save bitmap TODO only on win
+        if (true /*won level*/) {
+            var save = GetSave();
+            for (i = 0; i < save.levels.length; i++) {
+                var level = save.levels[i];
+                if (level.name == currentLevel) {
+                    level.bitmap = bmcanvas.canvas.toDataURL();
+                }
+                save.levels[i] = level;
+            }
+            SaveGame(save);
+            console.log(save);
+        }
+
+        //move to game over
+        this.game.state.clearCurrentState();
+        this.game.state.start("EndLevel", wonLevel);
+
 	}
 
 };

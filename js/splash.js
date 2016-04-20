@@ -1,4 +1,4 @@
-var splash = function(game){}
+var splash = function(game){};
 
 splash.prototype = {
 
@@ -10,9 +10,12 @@ splash.prototype = {
         this.game.scale.refresh();
 
         //load assets for splash screen
-        this.game.load.image('logo', 'assets/phaser.png');
-        this.game.load.image('play', 'assets/play.png');
 
+        this.game.load.image('button', 'assets/button.jpg');
+
+        //create save if first play
+        var save = GetSave() || new DefaultSaveGame();
+        SaveGame(save);
     },
 
     create: function(){
@@ -25,12 +28,31 @@ splash.prototype = {
 		text.anchor.set(0.5);
 		
         var playButton = this.game.add.button(this.game.world.centerX,
-                                                this.game.world.height -50,"play",this.onPlayClicked,this);
+                                                this.game.world.height -50,"button",this.onPlayClicked,this);
         playButton.anchor.setTo(0.5,0.5);
+        text = this.game.add.text(playButton.x, playButton.y, "Play", style);
+        text.anchor.set(0.5);
     },
     onPlayClicked: function(){
         //TODO level select screen
+        currentLevel = "Level1";
         //TODO load screen
-        this.game.state.start("World");
+        this.game.state.start("LevelSelect");
     }
+};
+
+function DefaultSaveGame () {
+  this.levels = [
+      {name:"level1", unlocked:true, completed:false, bitmap:null, score:0},
+      {name:"level2", unlocked:true, completed:false, bitmap:null, score:0},
+      {name:"level3", unlocked:true, completed:false, bitmap:null, score:0}
+  ];
+}
+
+function GetSave() {
+    return JSON.parse(localStorage.getItem("tattooSaveGame"));
+}
+
+function SaveGame(save) {
+    localStorage.setItem("tattooSaveGame", JSON.stringify(save));
 }
