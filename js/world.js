@@ -38,7 +38,7 @@ world.prototype = {
 
         bmcanvas.smoothed = false;
         
-        refillDot = new refill(250, 250);
+        refillDot = new refill(this.game, 250, 250);
 
         this.game.input.addMoveCallback(this.paint, this);
     },
@@ -64,7 +64,6 @@ world.prototype = {
             lastPosition = position;
             
             inkAmount -= inkDecrease;
-            console.log("inkAmount: " + inkAmount);
             
             //bmcanvas.path(loop, x, y, null, null, '');
 
@@ -76,8 +75,9 @@ world.prototype = {
 
     update: function() {
 
-        if (lastPosition != null && Phaser.Point.distance(lastPosition, refillDot, true) < 20) {
+        if (lastPosition != null && Phaser.Point.distance(lastPosition, refillDot, true) < 20 && refillDot.canRefill) {
             inkAmount += refillDot.refillAmount;
+            refillDot.canRefill = false;
             console.log("Refilled!");    
         }
 
@@ -85,10 +85,14 @@ world.prototype = {
 
 };
 
-var refill = function(x, y){
-    this.refillAmount = 20;
+var refill = function(game, x, y){
+    this.refillAmount = inkDecrease * 40;
+    this.canRefill = true;
     this.x = x;
     this.y = y;
+    this.graphics = game.add.graphics(0,0);
+    this.graphics.beginFill(0xFF0000, 1);
+    this.graphics.drawCircle(x, y, 10);
 };
 refill.prototype = Object.create(Phaser.Point.prototype);
 refill.prototype.constructor = refill;
