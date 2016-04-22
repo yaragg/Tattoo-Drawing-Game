@@ -40,15 +40,13 @@ world.prototype = {
         cursorLoop.scale.set(0.5);
         cursorLoop.anchor.set(0.5);
 
-        emitter = this.game.add.emitter(0, 0, 100);
+        emitter = this.game.add.emitter(0, 0, 500);
         emitter.makeParticles(['loop']);
-        // this.cursor = this.game.add.sprite('loop');
         emitter.setAlpha(1, 0, 3000);
-        emitter.setScale(0.02, 0.1, 0.02, 0.1, 1000);
-        emitter.minParticleSpeed = new Phaser.Point(-100,-100);
-        emitter.maxParticleSpeed = new Phaser.Point(100,100);
-        // emitter.start();
-        emitter.flow(500, 100, 100, -1, true);
+        emitter.setScale(0.02, 0.15, 0.02, 0.15, 1000);
+        emitter.minParticleSpeed = new Phaser.Point(-50,-50);
+        emitter.maxParticleSpeed = new Phaser.Point(50,50);
+        emitter.start(false, 700, 5);
     },
 
     paint: function (pointer, x, y) {
