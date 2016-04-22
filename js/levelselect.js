@@ -28,35 +28,40 @@ levelSelect.prototype = {
 
         style = { font: "24px Arial", fill: "#000000", align: "center"};
 
+        var buttons = [];
+
         var tButton = this.game.add.button(this.game.world.centerX-220,
             this.game.world.centerY,"button",function(){
                 currentLevel = "level1";
                 this.game.state.clearCurrentState();
-                this.game.state.start("World");
+                this.game.state.start("Loading");
             },this);
         tButton.anchor.setTo(0.5,0.5);
-        text = this.game.add.text(tButton.x, tButton.y, "Level 1", style);
+        text = tButton.addChild(this.game.make.text(0, 0, "Level 1", style));
         text.anchor.set(0.5);
+        buttons.push(tButton);
 
         tButton = this.game.add.button(this.game.world.centerX,
             this.game.world.centerY,"button",function(){
                 currentLevel = "level2";
                 this.game.state.clearCurrentState();
-                this.game.state.start("World");
+                this.game.state.start("Loading");
             },this);
         tButton.anchor.setTo(0.5,0.5);
-        text = this.game.add.text(tButton.x, tButton.y, "Level 2", style);
+        text = tButton.addChild(this.game.make.text(0, 0, "Level 2", style));
         text.anchor.set(0.5);
+        buttons.push(tButton);
 
         tButton = this.game.add.button(this.game.world.centerX+220,
             this.game.world.centerY,"button",function(){
                 currentLevel = "level3";
                 this.game.state.clearCurrentState();
-                this.game.state.start("World");
+                this.game.state.start("Loading");
             },this);
         tButton.anchor.setTo(0.5,0.5);
-        text = this.game.add.text(tButton.x, tButton.y, "Level 3", style);
+        text = tButton.addChild(this.game.make.text(0, 0, "Level 3", style));
         text.anchor.set(0.5);
+        buttons.push(tButton);
 
         //thumbnails
         var save = GetSave();
@@ -68,6 +73,11 @@ levelSelect.prototype = {
                 tSprite.anchor.setTo(0.5,0.5);
                 var tScale = 200/tSprite.width;
                 tSprite.scale.setTo(tScale,tScale);
+            }
+
+            if (!level.unlocked) {
+                buttons[i].alpha = 0.5;
+                buttons[i].input.enabled = false;
             }
         }
     }
