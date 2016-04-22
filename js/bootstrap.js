@@ -11,6 +11,7 @@ window.onload = function(){
     game.state.add("Splash",splash);
     game.state.add("World",world);
     game.state.add("LevelSelect", levelSelect);
+    game.state.add("Loading", loading);
     game.state.add("EndLevel",endLevel);
     game.state.start("Splash");
 };

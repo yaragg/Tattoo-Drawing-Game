@@ -12,6 +12,7 @@ splash.prototype = {
         //load assets for splash screen
 
         this.game.load.image('button', 'assets/button.jpg');
+        this.game.load.image('loader', 'assets/loader.png');
 
         //create save if first play
         var save = GetSave() || new DefaultSaveGame();
@@ -44,8 +45,8 @@ splash.prototype = {
 function DefaultSaveGame () {
   this.levels = [
       {name:"level1", unlocked:true, completed:false, bitmap:null, score:0},
-      {name:"level2", unlocked:true, completed:false, bitmap:null, score:0},
-      {name:"level3", unlocked:true, completed:false, bitmap:null, score:0}
+      {name:"level2", unlocked:false, completed:false, bitmap:null, score:0},
+      {name:"level3", unlocked:false, completed:false, bitmap:null, score:0}
   ];
 }
 

@@ -30,7 +30,6 @@ endLevel.prototype = {
         text.anchor.set(0.5);
     },
     onPlayClicked: function(){
-        //TODO go back to level select here
-        this.game.state.start("Splash");
+        this.game.state.start("LevelSelect");
     }
 };
