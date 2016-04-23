@@ -3,16 +3,12 @@ var world = function(game){
     var colorPos;
     var colors;
     var bmcanvas;
-    var bmworld;
     var lastPosition;
     var cursorLoop;
     var cursorEmitter;
     var inkAmount;
     var inkDecrease;
-    var refillDot;
     var workPoint;
-    var inkAmount;
-    var inkDecrease;
     var pointerDown;
     var points;
     var refills;
@@ -22,6 +18,23 @@ world.prototype = {
     
     preload: function () {
         
+    },
+
+    dispose: function() {
+        this.game.input.deleteMoveCallback(this.paint, this);
+
+        bmcanvas.destroy();
+        bmcanvas = null;
+        loop.destroy();
+        loop = null;
+        cursorLoop.destroy();
+        cursorLoop = null;
+        cursorEmitter = null;
+        colors = null;
+        lastPosition = null;
+        workPoint = null;
+        points = null;
+        refills = null;
     },
     
     create: function(){
@@ -78,11 +91,11 @@ world.prototype = {
     },
 
     paint: function (pointer, x, y) {
-            var position = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
-            emitter.position.x = position.x;
-            emitter.position.y = position.y; 
-            cursorLoop.position.x = position.x;  
-            cursorLoop.position.y = position.y;
+            workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
+            emitter.position.x = workPoint.x;
+            emitter.position.y = workPoint.y;
+            cursorLoop.position.x = workPoint.x;
+            cursorLoop.position.y = workPoint.y;
        
         if (pointer.isDown && inkAmount > 0) {
             //for game over check
@@ -97,9 +110,6 @@ world.prototype = {
             cursorLoop.tint = loop.tint;
 
 
-            var position = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
-            
-            var tween = this.game.make.tween(lastPosition).to(position);
             //smooth tween
             workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
             var tween = this.game.make.tween(lastPosition).to(workPoint);
@@ -118,6 +128,7 @@ world.prototype = {
             //Game over check
             if (pointerDown) {
                 this.endLevel();
+                return;
             }
         }
         lastPosition.setTo(x,y);
@@ -175,6 +186,7 @@ world.prototype = {
         }
 
         //move to game over
+        this.dispose();
         this.game.state.clearCurrentState();
         this.game.state.start("EndLevel", true, false, wonLevel);
 

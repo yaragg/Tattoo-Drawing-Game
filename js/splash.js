@@ -35,9 +35,9 @@ splash.prototype = {
         text.anchor.set(0.5);
     },
     onPlayClicked: function(){
-        //TODO level select screen
-        currentLevel = "Level1";
+        
         //TODO load screen
+        this.game.state.clearCurrentState();
         this.game.state.start("LevelSelect");
     }
 };
