@@ -39,6 +39,13 @@ world.prototype = {
     
     create: function(){
 
+        //level parsing
+        var level = this.game.cache.getJSON(currentLevel);
+
+        //background
+        var bg = this.game.add.image(this.game.world.centerX, this.game.world.centerY, level.background);
+        bg.anchor.setTo(0.5);
+
         lastPosition = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
         workPoint = new Phaser.Point();
         colors = Phaser.Color.HSVColorWheel();
@@ -59,8 +66,7 @@ world.prototype = {
 
         bmcanvas.smoothed = false;
 
-        //level parsing
-        var level = this.game.cache.getJSON(currentLevel);
+
 
         points = [];
         refills = [];
