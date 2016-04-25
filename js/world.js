@@ -12,6 +12,7 @@ var world = function(game){
     var pointerDown;
     var points;
     var refills;
+	var inkBar;
 };
 
 world.prototype = {
@@ -57,16 +58,20 @@ world.prototype = {
         loop.scale.set(0.25);
         loop.anchor.set(0.5);
         
-        //ink
-        inkAmount = loop.scale.x;
-        inkDecrease = inkAmount / 200;
+        
         
         bmcanvas = this.game.add.bitmapData(this.game.width, this.game.height);
         bmcanvas.addToWorld();
 
         bmcanvas.smoothed = false;
 
-
+		//ink
+        inkAmount = 500;
+        inkDecrease = inkAmount / 500;
+		
+		inkBar = this.game.add.bitmapData(inkAmount, 8);
+		this.game.add.sprite(this.game.world.centerX, this.game.world.centerX);
+		//this.game.add.tween(this).to({inkAmount : 0}, 2000, null, true, 0, Infinity);
 
         points = [];
         refills = [];
@@ -114,7 +119,12 @@ world.prototype = {
         
             for(var j=0; j<emitter.children.length; j++) emitter.children[j].tint = loop.tint;
             cursorLoop.tint = loop.tint;
-
+			
+			//ink
+			var distance = Phaser.Point.distance(lastPosition, workPoint, true);
+            if (Math.abs(distance) >= 1)
+				inkAmount -= inkDecrease * Math.abs(distance);
+            //cursorLoop.scale.set(inkAmount);
 
             //smooth tween
             workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
@@ -124,10 +134,6 @@ world.prototype = {
                 bmcanvas.draw(loop, path[j].x, path[j].y, null, null, '');
             }
             lastPosition.setTo(workPoint.x, workPoint.y);
-
-            //ink
-            inkAmount -= inkDecrease;
-            loop.scale.set(inkAmount);
 
             this.checkPoints();
         } else {
@@ -158,10 +164,16 @@ world.prototype = {
     },
 
     update: function() {
-
-        if (loop.scale.x <= 0) {
+		
+		inkBar.context.clearRect(0,0,inkBar.width, inkBar.height);
+		inkBar.context.fillStyle = '#0f0';
+		inkBar.context.fillRect(0,0, inkAmount, 8);
+	
+        if (cursorLoop.scale.x <= 0) {
 			this.endLevel();
 		}
+		
+		inkBar.dirty = true;
 
     },
 	
