@@ -1,5 +1,5 @@
 {
-  "background":null,
+  "background":"background01",
   "points":[
     {"x":200,"y":500},
     {"x":400,"y":200},
