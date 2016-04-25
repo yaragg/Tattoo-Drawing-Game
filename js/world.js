@@ -58,8 +58,6 @@ world.prototype = {
         loop.scale.set(0.25);
         loop.anchor.set(0.5);
         
-        
-        
         bmcanvas = this.game.add.bitmapData(this.game.width, this.game.height);
         bmcanvas.addToWorld();
 
@@ -70,8 +68,7 @@ world.prototype = {
         inkDecrease = inkAmount / 500;
 		
 		inkBar = this.game.add.bitmapData(inkAmount, 8);
-		this.game.add.sprite(this.game.world.centerX, this.game.world.centerX);
-		//this.game.add.tween(this).to({inkAmount : 0}, 2000, null, true, 0, Infinity);
+		this.game.add.sprite(10, 550, inkBar);
 
         points = [];
         refills = [];
@@ -115,7 +112,6 @@ world.prototype = {
             //color
             loop.tint = (colors[colorPos].r << 16) | (colors[colorPos].g << 8) | colors[colorPos].b;
             colorPos = this.game.math.wrapValue(colorPos, 1, 359);
-
         
             for(var j=0; j<emitter.children.length; j++) emitter.children[j].tint = loop.tint;
             cursorLoop.tint = loop.tint;
