@@ -64,11 +64,11 @@ world.prototype = {
         bmcanvas.smoothed = false;
 
 		//ink
-        inkAmount = 500;
-        inkDecrease = inkAmount / 500;
+        inkAmount = 100;
+        inkDecrease = inkAmount / 800;	// Amount of ink you loose per unit of distance
 		
 		inkBar = this.game.add.bitmapData(inkAmount, 8);
-		this.game.add.sprite(10, 550, inkBar);
+		this.game.add.sprite(10, 580, inkBar);
 
         points = [];
         refills = [];
@@ -162,7 +162,6 @@ world.prototype = {
     update: function() {
 		
 		inkBar.context.clearRect(0,0,inkBar.width, inkBar.height);
-		inkBar.context.fillStyle = '#0f0';
 		inkBar.context.fillRect(0,0, inkAmount, 8);
 	
         if (cursorLoop.scale.x <= 0) {
