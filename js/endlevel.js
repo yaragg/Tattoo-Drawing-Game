@@ -8,6 +8,18 @@ endLevel.prototype = {
     init: function(won){
 		wonLevel = won;
     },
+	
+	preload: function() {
+		var save = GetSave();
+        for (var i = 0; i < save.levels.length; i++) {
+            var level = save.levels[i];
+            if (level.bitmap != null) {
+                var data = new Image();
+                data.src = level.bitmap;
+                this.game.cache.addImage(level.name, level.bitmap, data);
+            }
+        }
+	},
 
     create: function(){
         var style = { font: "32px Arial", fill: "#000000", align: "center"};

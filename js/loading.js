@@ -13,7 +13,8 @@ loading.prototype = {
 
         this.game.load.json(currentLevel, 'assets/levels/'+currentLevel+'.json');
         this.game.load.image('loop', 'assets/brush.png');
-        this.game.load.image('background01', 'assets/background01.png');
+        this.game.load.image('background01', 'assets/Skin_Background.png');
+		this.game.load.image('ink', 'assets/ink.png');
         //load more assets here
 
     },
