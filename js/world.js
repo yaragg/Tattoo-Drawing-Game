@@ -13,6 +13,9 @@ var world = function(game){
     var points;
     var refills;
 	var inkBar;
+	var blocks;
+	var blocked;
+	var currBlock;
 };
 
 world.prototype = {
@@ -36,6 +39,7 @@ world.prototype = {
         workPoint = null;
         points = null;
         refills = null;
+		blocks = null;
     },
     
     create: function(){
@@ -66,10 +70,12 @@ world.prototype = {
 		//ink
         inkAmount = 100;
         inkDecrease = level.inkDecrease;	// Amount of ink you loose per unit of distance
-		
 		inkBar = this.game.add.bitmapData(inkAmount, 8);
 		this.game.add.sprite(10, 580, inkBar);
-
+		
+		blocked = false;
+		blocks = [];
+		blocks.push(
         points = [];
         refills = [];
 
@@ -99,13 +105,15 @@ world.prototype = {
     },
 
     paint: function (pointer, x, y) {
-            workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
-            emitter.position.x = workPoint.x;
-            emitter.position.y = workPoint.y;
-            cursorLoop.position.x = workPoint.x;
-            cursorLoop.position.y = workPoint.y;
-       
-        if (pointer.isDown && inkAmount > 0) {
+		workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
+		emitter.position.x = workPoint.x;
+		emitter.position.y = workPoint.y;
+		cursorLoop.position.x = workPoint.x;
+        cursorLoop.position.y = workPoint.y;
+		
+		//if (Phaser.Point.distance(workPoint, , true)
+		
+        if (pointer.isDown && inkAmount > 0 && !blocked) {
             //for game over check
             pointerDown = true;
 
@@ -133,6 +141,7 @@ world.prototype = {
 
             this.checkPoints();
         } else {
+			this.checkBlocked();
             //Game over check
             if (pointerDown) {
                 this.endLevel();
@@ -158,6 +167,21 @@ world.prototype = {
             }
         }
     },
+	
+	checkBlocked: function() {
+		for (int i = 0; i < blocks.length; i++) {
+			if (Phaser.Point.distance(lastPosition, blocks[i], true) < 20) {
+				if (!blocked) {
+					blocked = !blocked;
+					currBlock = blocks[i];
+				}
+				if (blocked && blocks[i] == currBlock) {
+					currBlock = null;
+					blocked = false;
+				}
+            }
+		}
+	},
 
     update: function() {
 		
@@ -208,7 +232,7 @@ world.prototype = {
 };
 
 var dot = function(game, x, y, refill){
-    this.refillAmount = inkAmount/4;
+    this.refillAmount = inkDecrease * 400;
     this.canRefill = refill;
     this.visited = false;
     this.x = x;
