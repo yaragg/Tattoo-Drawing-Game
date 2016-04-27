@@ -63,6 +63,17 @@ levelSelect.prototype = {
         text.anchor.set(0.5);
         buttons.push(tButton);
 
+        tButton = this.game.add.button(this.game.world.centerX-220,
+            this.game.world.centerY+220,"button",function(){
+                currentLevel = "level4";
+                this.game.state.clearCurrentState();
+                this.game.state.start("Loading");
+            },this);
+        tButton.anchor.setTo(0.5,0.5);
+        text = tButton.addChild(this.game.make.text(0, 0, "Level 4", style));
+        text.anchor.set(0.5);
+        buttons.push(tButton);
+
         //thumbnails
         var save = GetSave();
         for (var i = 0; i < save.levels.length; i++) {

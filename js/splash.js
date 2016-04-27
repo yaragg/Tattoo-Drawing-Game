@@ -46,7 +46,8 @@ function DefaultSaveGame () {
   this.levels = [
       {name:"level1", unlocked:true, completed:false, bitmap:null, score:0},
       {name:"level2", unlocked:false, completed:false, bitmap:null, score:0},
-      {name:"level3", unlocked:false, completed:false, bitmap:null, score:0}
+      {name:"level3", unlocked:false, completed:false, bitmap:null, score:0},
+      {name:"level4", unlocked:false, completed:false, bitmap:null, score:0}
   ];
 }
 
