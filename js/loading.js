@@ -11,17 +11,27 @@ loading.prototype = {
         //loadingBar.anchor.setTo(0.5,0.5);
         //this.game.load.setPreloadSprite(loadingBar);
 
+		// first stage, load level json and any global assets
         this.game.load.json(currentLevel, 'assets/levels/'+currentLevel+'.json');
         this.game.load.image('loop', 'assets/brush.png');
-        this.game.load.image('background01', 'assets/Skin_Background.png');
 		this.game.load.image('ink', 'assets/ink.png');
         //load more assets here
 
     },
 
     create: function(){
-        this.game.state.clearCurrentState();
+		//second phase, load any assets defined in level
+		this.game.load.onLoadComplete.add(this.loadComplete, this);
+		
+		var level = this.game.cache.getJSON(currentLevel);
+        this.game.load.image(level.background, 'assets/'+level.background+'.png');
+		
+		this.game.load.start();
+    },
+	
+	loadComplete: function() {
+		this.game.state.clearCurrentState();
         this.game.state.start("World");
-    }
+	}
     
 };
