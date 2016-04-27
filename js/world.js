@@ -65,7 +65,7 @@ world.prototype = {
 
 		//ink
         inkAmount = 100;
-        inkDecrease = inkAmount / 800;	// Amount of ink you loose per unit of distance
+        inkDecrease = level.inkDecrease;	// Amount of ink you loose per unit of distance
 		
 		inkBar = this.game.add.bitmapData(inkAmount, 8);
 		this.game.add.sprite(10, 580, inkBar);
