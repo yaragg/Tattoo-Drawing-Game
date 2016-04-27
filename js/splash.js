@@ -15,7 +15,7 @@ splash.prototype = {
         this.game.load.image('loader', 'assets/loader.png');
 
         //create save if first play
-        var save = GetSave() || new DefaultSaveGame();
+        var save = new DefaultSaveGame();
         SaveGame(save);
     },
 
