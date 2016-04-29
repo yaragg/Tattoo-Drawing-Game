@@ -65,7 +65,7 @@ world.prototype = {
 
 		//ink
         inkAmount = 100;
-        inkDecrease = inkAmount / 800;	// Amount of ink you loose per unit of distance
+        inkDecrease = level.inkDecrease;	// Amount of ink you loose per unit of distance
 		
 		inkBar = this.game.add.bitmapData(inkAmount, 8);
 		this.game.add.sprite(10, 580, inkBar);
@@ -151,7 +151,7 @@ world.prototype = {
         }
 
         for (i = 0; i < refills.length; i++) {
-            if (Phaser.Point.distance(lastPosition, refills[i], true) < 20 &&
+            if (Phaser.Point.distance(lastPosition, refills[i], true) < refills[i].sprite.width/2 &&
                 refills[i].canRefill) {
                 inkAmount += refills[i].refillAmount;
                 refills[i].visit();
@@ -181,12 +181,12 @@ world.prototype = {
             }
         }
         
-        //save bitmap TODO only on win
+        //save bitmap
         if (wonLevel) {
             var save = GetSave();
             for (i = 0; i < save.levels.length; i++) {
                 var level = save.levels[i];
-                if (level.name == currentLevel) {
+                if (level.file == currentLevel) {
                     level.bitmap = bmcanvas.canvas.toDataURL();
                     level.completed = true;
                     if (i < save.levels.length-1) {
@@ -213,15 +213,21 @@ var dot = function(game, x, y, refill){
     this.visited = false;
     this.x = x;
     this.y = y;
-    this.graphics = game.add.graphics(0,0);
+    
     if (refill) {
-        this.graphics.beginFill(0x00FF00, 1);
+        this.sprite = game.add.sprite(x,y,'ink');
+		this.sprite.scale.setTo(0.5);
+		this.sprite.anchor.setTo(0.5);
     }
     else {
+		this.graphics = game.add.graphics(0,0);
         this.graphics.beginFill(0x000000, 1);
+		this.graphics.drawCircle(x, y, 10);
+		this.sprite = game.add.sprite(0,0);
+		this.sprite.addChild(this.graphics);
     }
 
-    this.graphics.drawCircle(x, y, 10);
+    
 };
 dot.prototype = Object.create(Phaser.Point.prototype);
 dot.prototype.constructor = dot;
@@ -229,5 +235,5 @@ dot.prototype.visit = function() {
     //TODO particle effects?
     this.canRefill = false;
     this.visited = true;
-    this.graphics.alpha = 0.5;
+    this.sprite.alpha = 0.5;
 };

@@ -1,5 +1,5 @@
 {
-  "background":"background01",
+  "background":"Skin_Background",
   "points":[
     {"x":380,"y":40},
     {"x":360,"y":290},
@@ -14,5 +14,6 @@
     {"x":445,"y":500},
     {"x":445,"y":370},
     {"x":520,"y":170}
-  ]
+  ],
+  "inkDecrease": 0.095
 }
