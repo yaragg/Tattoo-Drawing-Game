@@ -29,6 +29,13 @@ endLevel.prototype = {
 			tString = "Level Complete";
 		}else {
 			tString = "Game Over";
+            var button = this.game.add.button(this.game.world.centerX,
+                this.game.world.height -150,"button",this.onRestartClicked,this);
+            button.anchor.setTo(0.5,0.5);
+
+            var tstyle = { font: "24px Arial", fill: "#000000", align: "center"};
+            var text = this.game.add.text(button.x, button.y, "Retry Level", tstyle);
+            text.anchor.set(0.5);
 		}
 		
 		
@@ -51,6 +58,11 @@ endLevel.prototype = {
         style = { font: "24px Arial", fill: "#000000", align: "center"};
         text = this.game.add.text(tButton.x, tButton.y, "Model Test", style);
         text.anchor.set(0.5);
+    },
+
+    onRestartClicked: function() {
+        this.game.state.clearCurrentState();
+        this.game.state.start("World");
     },
 
     onPlayClicked: function(){
