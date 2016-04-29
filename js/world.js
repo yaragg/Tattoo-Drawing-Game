@@ -192,8 +192,10 @@ world.prototype = {
                     if (i < save.levels.length-1) {
                         save.levels[i+1].unlocked = true;
                     }
+                    save.levels[i] = level;
+                    break;
                 }
-                save.levels[i] = level;
+
             }
             SaveGame(save);
         }
