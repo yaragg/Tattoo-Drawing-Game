@@ -186,7 +186,7 @@ world.prototype = {
             var save = GetSave();
             for (i = 0; i < save.levels.length; i++) {
                 var level = save.levels[i];
-                if (level.name == currentLevel) {
+                if (level.file == currentLevel) {
                     level.bitmap = bmcanvas.canvas.toDataURL();
                     level.completed = true;
                     if (i < save.levels.length-1) {
