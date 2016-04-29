@@ -14,8 +14,8 @@ splash.prototype = {
         this.game.load.image('button', 'assets/button.jpg');
         this.game.load.image('loader', 'assets/loader.png');
 
-        //create save if first play
-        var save = GetSave() || new DefaultSaveGame();
+        //TODO set to save before release
+        var save = new DefaultSaveGame();
         SaveGame(save);
     },
 
@@ -44,9 +44,20 @@ splash.prototype = {
 
 function DefaultSaveGame () {
   this.levels = [
-      {name:"level1", unlocked:true, completed:false, bitmap:null, score:0},
-      {name:"level2", unlocked:false, completed:false, bitmap:null, score:0},
-      {name:"level3", unlocked:false, completed:false, bitmap:null, score:0}
+      {file:"level1", name:"Level 1", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level2", name:"Level 2", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level3", name:"Level 3", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level1", name:"Level 4", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level2", name:"Level 5", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level3", name:"Level 6", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level1", name:"Level 7", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level2", name:"Level 8", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level3", name:"Level 9", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level1", name:"Level 10", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level2", name:"Level 11", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level3", name:"Level 12", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level1", name:"Level 13", unlocked:false, completed:false, bitmap:null, score:0}
+
   ];
 }
 
