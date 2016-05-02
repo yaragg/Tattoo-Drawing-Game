@@ -48,7 +48,7 @@ function DefaultSaveGame () {
       {file:"level2", name:"Level 2", unlocked:false, completed:false, bitmap:null, score:0},
       {file:"level3", name:"Level 3", unlocked:false, completed:false, bitmap:null, score:0},
       {file:"level4", name:"Level 4", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level2", name:"Level 5", unlocked:false, completed:false, bitmap:null, score:0},
+      {file:"level5", name:"Level 5", unlocked:false, completed:false, bitmap:null, score:0},
       {file:"level3", name:"Level 6", unlocked:false, completed:false, bitmap:null, score:0},
       {file:"level1", name:"Level 7", unlocked:false, completed:false, bitmap:null, score:0},
       {file:"level2", name:"Level 8", unlocked:false, completed:false, bitmap:null, score:0},
@@ -58,6 +58,8 @@ function DefaultSaveGame () {
       {file:"level3", name:"Level 12", unlocked:false, completed:false, bitmap:null, score:0},
       {file:"level1", name:"Level 13", unlocked:false, completed:false, bitmap:null, score:0}
   ];
+
+  this.levels[4].unlocked = true;
 }
 
 function GetSave() {
