@@ -237,5 +237,5 @@ dot.prototype.visit = function() {
     //TODO particle effects?
     this.canRefill = false;
     this.visited = true;
-    this.sprite.alpha = 0.5;
+    this.sprite.alpha = 0.1;
 };

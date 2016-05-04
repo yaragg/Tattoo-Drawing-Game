@@ -44,22 +44,23 @@ splash.prototype = {
 
 function DefaultSaveGame () {
   this.levels = [
-      {file:"level1", name:"Level 1", unlocked:true, completed:false, bitmap:null, score:0},
-      {file:"level2", name:"Level 2", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level3", name:"Level 3", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level4", name:"Level 4", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level5", name:"Level 5", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level3", name:"Level 6", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level1", name:"Level 7", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level2", name:"Level 8", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level3", name:"Level 9", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level1", name:"Level 10", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level2", name:"Level 11", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level3", name:"Level 12", unlocked:false, completed:false, bitmap:null, score:0},
-      {file:"level1", name:"Level 13", unlocked:false, completed:false, bitmap:null, score:0}
+      {file:"level1", name:"One", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level2", name:"Dimensions", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level3", name:"Love", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level4", name:"Mystery", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level5", name:"Business", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level6", name:"Burst", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level7", name:"Sea", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level8", name:"Gone", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level9", name:"Friend", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level10", name:"Studious", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level11", name:"Dry", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level12", name:"Moving", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level13", name:"Focus", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level14", name:"Spooky", unlocked:true, completed:false, bitmap:null, score:0},
+      {file:"level15", name:"Curious", unlocked:true, completed:false, bitmap:null, score:0}
   ];
 
-  this.levels[4].unlocked = true;
 }
 
 function GetSave() {
