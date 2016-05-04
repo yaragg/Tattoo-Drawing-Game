@@ -17,6 +17,7 @@ var world = function(game){
 		var blocked;
 		var currBlock;
 		var stopPosition;
+		var stopTime;
 };
 
 world.prototype = {
@@ -77,6 +78,7 @@ world.prototype = {
 				this.game.add.sprite(10, 580, inkBar);
 		
 				blocked = false;
+				stopTime = 0;
 				blocks = [];
 				blocks.push(new dot(this.game, this.game.width/2, this.game.height/2, false));
         points = [];
@@ -175,11 +177,12 @@ world.prototype = {
 		for (i = 0; i < blocks.length; i++) {
 			if (!blocked && Phaser.Point.distance(lastPosition, blocks[i], true) < 25 && pointerDown) {
 					stopPosition = new Phaser.Point(blocks[i].x, blocks[i].y);
+					stopTime = Phaser.Time.now;
 					blocked = true;
 					currBlock = blocks[i];
 					console.log("Blocked");
 			}
-			if (blocked && Phaser.Point.distance(lastPosition, stopPosition, true) < 20) {
+			if (blocked && Phaser.Point.distance(lastPosition, stopPosition, true) < 20 && stopTime - Phaser.Time.now > 20 ) {
 					currBlock = null;
 					blocked = false;
 					console.log("Unblocked");
@@ -199,8 +202,8 @@ world.prototype = {
 		
 		inkBar.dirty = true;
 			
-		//console.log("Time: " + Phaser.Time.frames);
-		//if (blockDelay != null) console.log("Delay: " + blockDelay);
+		console.log("Time: " + Phaser.Time.now);
+		if (stopTime != null) console.log("Delay: " + stopTime);
 
     },
 	
