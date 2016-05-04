@@ -1,0 +1,7 @@
+Scraper to generate json from an image with dots. Any black dots will register as points, and any other non-black dots as pickups.
+Use a 800x600 image for proper alignment in game.
+
+Requires OpenCV, NumPy libraries with Python 2.7
+
+arguments: image name, output file name
+usage: python level_gen.py level_6.png level6.json
