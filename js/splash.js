@@ -11,7 +11,7 @@ splash.prototype = {
 
         //load assets for splash screen
 
-        this.game.load.image('button', 'assets/button.jpg');
+        this.game.load.image('button', 'assets/button.png');
         this.game.load.image('loader', 'assets/loader.png');
 
         //TODO set to save before release
