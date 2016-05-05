@@ -26,6 +26,9 @@ loading.prototype = {
             this.game.load.json(currentLevel, 'assets/levels/'+currentLevel+'.json');
             this.game.load.image('loop', 'assets/brush.png');
             this.game.load.image('ink', 'assets/ink.png');
+            this.game.load.image('bar_fill', 'assets/bar_fill.png');
+            this.game.load.image('bar_bg', 'assets/bar_bg.png');
+
         }
 
 
