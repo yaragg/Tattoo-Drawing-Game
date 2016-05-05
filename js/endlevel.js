@@ -22,7 +22,7 @@ endLevel.prototype = {
 	},
 
     create: function(){
-        var style = { font: "32px Arial", fill: "#000000", align: "center"};
+        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 			
 		var tString = "";
 		if (wonLevel) {
@@ -33,7 +33,7 @@ endLevel.prototype = {
                 this.game.world.height -150,"button",this.onRestartClicked,this);
             button.anchor.setTo(0.5,0.5);
 
-            var tstyle = { font: "24px Arial", fill: "#000000", align: "center"};
+            var tstyle = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
             var text = this.game.add.text(button.x, button.y, "Retry Level", tstyle);
             text.anchor.set(0.5);
 		}
@@ -46,7 +46,7 @@ endLevel.prototype = {
             this.game.world.height -50,"button",this.onPlayClicked,this);
         tButton.anchor.setTo(0.5,0.5);
 
-        style = { font: "24px Arial", fill: "#000000", align: "center"};
+        style = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
         text = this.game.add.text(tButton.x, tButton.y, "Back To Menu", style);
         text.anchor.set(0.5);
 
@@ -55,7 +55,7 @@ endLevel.prototype = {
             this.game.world.height -50,"button",this.onModelClicked,this);
         tButton.anchor.setTo(0.5,0.5);
 
-        style = { font: "24px Arial", fill: "#000000", align: "center"};
+        style = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
         text = this.game.add.text(tButton.x, tButton.y, "Model Test", style);
         text.anchor.set(0.5);
     },

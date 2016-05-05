@@ -23,7 +23,7 @@ levelSelect.prototype = {
     },
     
     create: function(){
-        var style = { font: "32px Arial", fill: "#000000", align: "center"};
+        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
 
 
@@ -31,7 +31,7 @@ levelSelect.prototype = {
         var text = this.game.add.text(this.game.world.centerX, 30, "Level Select", style);
         text.anchor.set(0.5);
 
-        style = { font: "24px Arial", fill: "#000000", align: "center"};
+        style = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
         buttons = [];
         pageNumber = 0;
@@ -51,7 +51,7 @@ levelSelect.prototype = {
                         this.game.state.clearCurrentState();
                         this.game.state.start("Loading");
                     }
-                }(save.levels[i]),this);
+                }(save.levels[i]),this, 1, 0, 2);
             tButton.anchor.setTo(0.5,0.5);
             text = tButton.addChild(this.game.make.text(0, 0, level.name, style));
             text.anchor.set(0.5);
@@ -76,7 +76,7 @@ levelSelect.prototype = {
         }
 
         previousButton = this.game.add.button(this.game.world.centerX-270,
-            this.game.world.height-40, "button", this.onPreviousClicked,this);
+            this.game.world.height-40, "button", this.onPreviousClicked,this, 1, 0, 2);
         previousButton.anchor.setTo(0.5,0.5);
         text = previousButton.addChild(this.game.make.text(0, 0, "Previous Page", style));
         text.anchor.set(0.5);
@@ -84,7 +84,7 @@ levelSelect.prototype = {
         previousButton.input.enabled = false;
 
         nextButton = this.game.add.button(this.game.world.centerX+270,
-            this.game.world.height-40, "button", this.onNextClicked,this);
+            this.game.world.height-40, "button", this.onNextClicked,this, 1, 0, 2);
         nextButton.anchor.setTo(0.5,0.5);
         text = nextButton.addChild(this.game.make.text(0, 0, "Next Page", style));
         text.anchor.set(0.5);

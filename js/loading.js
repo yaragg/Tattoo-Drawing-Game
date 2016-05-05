@@ -7,7 +7,7 @@ loading.prototype = {
 
     preload: function () {
         //load assets for current level
-        var style = { font: "32px Arial", fill: "#000000", align: "center"};
+        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
         var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Loading...", style);
         text.anchor.set(0.5);
         //var loadingBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY+50,"loader");

@@ -19,7 +19,7 @@ model.prototype = {
 
     create: function(){
 
-        var style = { font: "48px Arial", fill: "#000000", align: "center"};
+        var style = { font: "48px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
         var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-70, "Background", style);
         text.anchor.set(0.5);

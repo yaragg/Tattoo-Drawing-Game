@@ -11,7 +11,8 @@ splash.prototype = {
 
         //load assets for splash screen
 
-        this.game.load.image('button', 'assets/button.png');
+        // this.game.load.image('button', 'assets/button.png');
+        this.game.load.spritesheet('button', 'assets/buttons.png', 200, 53);
         this.game.load.image('loader', 'assets/loader.png');
 
         //TODO set to save before release
@@ -23,13 +24,13 @@ splash.prototype = {
 		//TODO remove this when there is a background image
         this.game.stage.backgroundColor = "#FFFFFF";
 		
-        var style = { font: "32px Arial", fill: "#000000", align: "center"};
+        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
 		var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, "Tattoo Game", style);
 		text.anchor.set(0.5);
 		
         var playButton = this.game.add.button(this.game.world.centerX,
-                                                this.game.world.height -50,"button",this.onPlayClicked,this);
+                                                this.game.world.height -50,"button",this.onPlayClicked,this, 1, 0, 2);
         playButton.anchor.setTo(0.5,0.5);
         text = this.game.add.text(playButton.x, playButton.y, "Play", style);
         text.anchor.set(0.5);
