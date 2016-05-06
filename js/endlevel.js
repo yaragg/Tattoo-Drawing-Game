@@ -30,7 +30,7 @@ endLevel.prototype = {
 		}else {
 			tString = "Game Over";
             var button = this.game.add.button(this.game.world.centerX,
-                this.game.world.height -150,"button",this.onRestartClicked,this);
+                this.game.world.height -150,"button",this.onRestartClicked,this, 1, 0, 2);
             button.anchor.setTo(0.5,0.5);
 
             var tstyle = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
@@ -43,7 +43,7 @@ endLevel.prototype = {
 		text.anchor.set(0.5);
 
         var tButton = this.game.add.button(this.game.world.centerX-120,
-            this.game.world.height -50,"button",this.onPlayClicked,this);
+            this.game.world.height -50,"button",this.onPlayClicked,this, 1, 0, 2);
         tButton.anchor.setTo(0.5,0.5);
 
         style = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
@@ -52,7 +52,7 @@ endLevel.prototype = {
 
         //view model
         tButton = this.game.add.button(this.game.world.centerX+120,
-            this.game.world.height -50,"button",this.onModelClicked,this);
+            this.game.world.height -50,"button",this.onModelClicked,this, 1, 0, 2);
         tButton.anchor.setTo(0.5,0.5);
 
         style = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
