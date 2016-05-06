@@ -36,10 +36,16 @@ levelSelect.prototype = {
         buttons = [];
         pageNumber = 0;
         
+        var tPage = 0;
         var save = GetSave();
         for (var i = 0; i < save.levels.length; i++) {
 
             var level = save.levels[i];
+            
+            
+            if (currentLevel == level.file) {
+                tPage = Math.floor(i/6);
+            }
 
             var offsetX = -220 + (220 * (i%3));
             var offsetY = (i % 6 > 2) ? 180 : -50;
@@ -88,6 +94,10 @@ levelSelect.prototype = {
         nextButton.anchor.setTo(0.5,0.5);
         text = nextButton.addChild(this.game.make.text(0, 0, "Next Page", style));
         text.anchor.set(0.5);
+        
+        while (pageNumber != tPage) {
+            this.onNextClicked();
+        }
 
     },
 
