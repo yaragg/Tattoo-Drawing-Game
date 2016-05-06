@@ -103,7 +103,7 @@ world.prototype = {
         cursorLoop = this.game.add.sprite(0, 0, 'cursor');
         cursorLoop.animations.add('wobble');
         cursorLoop.animations.play('wobble',12,true);
-        cursorLoop.scale.set(0.2);
+        cursorLoop.scale.set(0.15);
         cursorLoop.anchor.set(0.5);
     },
 
@@ -228,11 +228,9 @@ var dot = function(game, x, y, refill){
 		this.sprite.anchor.setTo(0.5);
     }
     else {
-		this.graphics = game.add.graphics(0,0);
-        this.graphics.beginFill(0x000000, 1);
-		this.graphics.drawCircle(x, y, 10);
-		this.sprite = game.add.sprite(0,0);
-		this.sprite.addChild(this.graphics);
+        this.sprite = game.add.sprite(x,y,'burst');
+        this.sprite.scale.setTo(0.25);
+        this.sprite.anchor.setTo(0.5);
     }
 
     
