@@ -54,8 +54,11 @@ world.prototype = {
         pointerDown = false;
         
         //cursor
-        loop = this.game.make.sprite(0, 0, 'loop');
-        loop.scale.set(0.25);
+        loop = this.game.make.sprite(-500, -500, 'cursor');
+
+        //loop.animations.add('wobble');
+        //loop.animations.play('wobble',12,true);
+        loop.scale.set(0.1);
         loop.anchor.set(0.5);
         
         bmcanvas = this.game.add.bitmapData(this.game.width, this.game.height);
@@ -87,9 +90,7 @@ world.prototype = {
 
         this.game.input.addMoveCallback(this.paint, this);
 
-        cursorLoop = this.game.add.sprite(0, 0, 'loop');
-        cursorLoop.scale.set(0.5);
-        cursorLoop.anchor.set(0.5);
+
 
         emitter = this.game.add.emitter(0, 0, 500);
         emitter.makeParticles(['loop']);
@@ -98,6 +99,12 @@ world.prototype = {
         emitter.minParticleSpeed = new Phaser.Point(-50,-50);
         emitter.maxParticleSpeed = new Phaser.Point(50,50);
         emitter.start(false, 700, 5);
+
+        cursorLoop = this.game.add.sprite(0, 0, 'cursor');
+        cursorLoop.animations.add('wobble');
+        cursorLoop.animations.play('wobble',12,true);
+        cursorLoop.scale.set(0.2);
+        cursorLoop.anchor.set(0.5);
     },
 
     paint: function (pointer, x, y) {
