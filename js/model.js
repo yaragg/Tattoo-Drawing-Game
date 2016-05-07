@@ -35,12 +35,25 @@ model.prototype = {
         camera.position.y = 1;
         camera.position.z = 3;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
+        
+        mesh = null;
+        var mtlLoader = new THREE.MTLLoader();
+        mtlLoader.load( 'assets/Model_Final_01.mtl', function( materials ) {
+            materials.preload();
+            var objLoader = new THREE.OBJLoader();
+            objLoader.setMaterials( materials );
+            objLoader.load( 'assets/Model_Final_01.obj', function ( object ) {
+                //object.position.y = - 95;
+                scene.add( object );
+                mesh = object;
+            } );
+        });
 
         //Test model nonsense
-        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        var material = new THREE.MeshLambertMaterial({ color: 0x1ec876 });
-        mesh = new THREE.Mesh( geometry, material );
-        scene.add( mesh );
+        //var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        //var material = new THREE.MeshLambertMaterial({ color: 0x1ec876 });
+        //mesh = new THREE.Mesh( geometry, material );
+        //scene.add( mesh );
 
         var pointLight = new THREE.PointLight(0xffffff);
         pointLight.position.set(0, 300, 200);
@@ -57,8 +70,9 @@ model.prototype = {
     },
 
     update: function() {
-
-        mesh.rotateY(0.01);
+        
+        if (mesh != null)
+            mesh.rotateY(0.01);
         modelRenderer.render(scene, camera);
         modelTexture.dirty();
 
