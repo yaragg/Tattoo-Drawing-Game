@@ -25,9 +25,6 @@ levelSelect.prototype = {
     create: function(){
         var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
-
-
-
         var text = this.game.add.text(this.game.world.centerX, 30, "Level Select", style);
         text.anchor.set(0.5);
 
@@ -41,7 +38,6 @@ levelSelect.prototype = {
         for (var i = 0; i < save.levels.length; i++) {
 
             var level = save.levels[i];
-            
             
             if (currentLevel == level.file) {
                 tPage = Math.floor(i/6);

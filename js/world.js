@@ -11,8 +11,10 @@ var world = function(game){
     var workPoint;
     var pointerDown;
     var points;
+		var pointsRemaining;
     var refills;
-	var inkBar;
+		var inkBar;
+		var withinBounds;
 };
 
 world.prototype = {
@@ -77,7 +79,7 @@ world.prototype = {
 
         points = [];
         refills = [];
-
+				pointsRemaining = level.points.length;
         for (i = 0; i < level.points.length; i++) {
             var point = level.points[i];
             points.push(new dot(this.game, point.x, point.y, false));
@@ -93,9 +95,14 @@ world.prototype = {
         //Fix to make the game end if you lift your finger off the mobile screen
         //Apparently simply checking input.isDown like in the paint method doesn't work for mobile
         this.game.input.onUp.add(function(){
-                this.endLevel();
+                if (pointsRemaining === 0 || inkAmount <= 0 || !withinBounds) 
+									this.endLevel();
                 return;
         }.bind(this));
+			
+				//withinBounds = true;
+				document.addEventListener('onmouseout', function(){ withinBounds = false; });
+				document.addEventListener('onmouseover', function(){ withinBounds = true; });
 
 
         emitter = this.game.add.emitter(0, 0, 500);
@@ -151,7 +158,7 @@ world.prototype = {
             this.checkPoints();
         } else {
             //Game over check
-            if (pointerDown) {
+            if (pointerDown && !withinBounds) {
                 this.endLevel();
                 return;
             }
@@ -177,12 +184,17 @@ world.prototype = {
     },
 
     update: function() {
-		
+				if (cursorLoop.x <= 0 || cursorLoop.y <= 0 || 
+					 cursorLoop.x >= this.game.width || cursorLoop.y >= this.game.height) { withinBounds = false; }
+				else
+						withinBounds = true;
+			
+			
         inkBarFill.width = inkAmount;
 
-        if (cursorLoop.scale.x <= 0) {
-			this.endLevel();
-		}
+        if ( cursorLoop.scale.x <= 0) {
+					this.endLevel();
+			}
 		
     },
 	
@@ -247,6 +259,8 @@ dot.prototype = Object.create(Phaser.Point.prototype);
 dot.prototype.constructor = dot;
 dot.prototype.visit = function() {
     //TODO particle effects?
+		if (!this.canRefill)
+			pointsRemaining -= 1;
     this.canRefill = false;
     this.visited = true;
     this.sprite.alpha = 0.1;
