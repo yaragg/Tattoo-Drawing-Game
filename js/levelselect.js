@@ -17,7 +17,7 @@ levelSelect.prototype = {
             if (level.bitmap != null) {
                 var data = new Image();
                 data.src = level.bitmap;
-                this.game.cache.addImage(level.name, level.bitmap, data);
+                this.game.cache.addImage(level.file, level.bitmap, data);
             }
         }
     },
@@ -65,7 +65,7 @@ levelSelect.prototype = {
 
             if (level.bitmap != null) {
                 var tSprite = tButton.addChild(this.game.make.sprite(0,
-                -120, level.name));
+                -120, level.file));
                 tSprite.anchor.setTo(0.5,0.5);
                 var tScale = 200/tSprite.width;
                 tSprite.scale.setTo(tScale,tScale);

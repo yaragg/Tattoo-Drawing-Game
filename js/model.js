@@ -8,7 +8,7 @@ var model = function(game){
 model.prototype = {
 
     preload: function() {
-
+        this.game.load.image('texture', 'assets/Midel_UV.png');
     },
 
     dispose: function() {
@@ -21,33 +21,53 @@ model.prototype = {
 
         var style = { font: "48px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
-        var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-70, "Background", style);
-        text.anchor.set(0.5);
+        //var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-70, "Background", style);
+        //text.anchor.set(0.5);
 
         var texture = new PIXI.Texture(modelTexture);
         this.game.add.sprite(0, 0, texture);
+        
+        var tex = this.game.cache.getImage('texture');
+        var canvas = this.game.make.bitmapData(1024, 1024);
+        canvas.draw(tex, 0,0);
+        var tat = this.game.make.sprite(0,0, 'level1');
+        tat.scale.set(0.1);
+        tat.anchor.set(0.5);
+        canvas.draw(tat, 585, 735);
 
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75
             , 800/600
             , 0.1, 1000);
 
-        camera.position.y = 1;
-        camera.position.z = 3;
+        camera.position.y = 2;
+        camera.position.z = 5;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         
         mesh = null;
         var mtlLoader = new THREE.MTLLoader();
-        mtlLoader.load( 'assets/Model_Final_01.mtl', function( materials ) {
+        mtlLoader.setBaseUrl( 'assets/' );
+        mtlLoader.setPath( 'assets/' );
+        mtlLoader.load( 'Model_Final_01_SM.mtl', function( materials ) {
             materials.preload();
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials( materials );
-            objLoader.load( 'assets/Model_Final_01.obj', function ( object ) {
-                //object.position.y = - 95;
+            objLoader.setPath('assets/');
+            objLoader.load( 'Model_Final_01_SM.obj', function ( object ) {
+                object.position.y = 2.2;
                 scene.add( object );
                 mesh = object;
+                mesh.children[0].material.color = new THREE.Color(0xFFFFFF);
+                mesh.children[0].material.map.image = canvas.canvas;
+                mesh.children[0].material.map.needsUpdate = true;
+                mesh.children[0].geometry.computeFaceNormals();
+                mesh.children[0].geometry.computeVertexNormals();
+                //mesh.children[0].material = new THREE.MeshPhongMaterial( { map:canvas.canvas } );
+                console.log(mesh);
             } );
         });
+        
+        
 
         //Test model nonsense
         //var geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -56,7 +76,7 @@ model.prototype = {
         //scene.add( mesh );
 
         var pointLight = new THREE.PointLight(0xffffff);
-        pointLight.position.set(0, 300, 200);
+        pointLight.position.set(0, 2, 5);
 
         scene.add(pointLight);
 
@@ -72,7 +92,7 @@ model.prototype = {
     update: function() {
         
         if (mesh != null)
-            mesh.rotateY(0.01);
+            mesh.rotateY(0.005);
         modelRenderer.render(scene, camera);
         modelTexture.dirty();
 

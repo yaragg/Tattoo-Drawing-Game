@@ -16,7 +16,7 @@ endLevel.prototype = {
             if (level.bitmap != null) {
                 var data = new Image();
                 data.src = level.bitmap;
-                this.game.cache.addImage(level.name, level.bitmap, data);
+                this.game.cache.addImage(level.file, level.bitmap, data);
             }
         }
 	},
