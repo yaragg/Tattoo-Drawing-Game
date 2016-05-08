@@ -47,7 +47,7 @@ world.prototype = {
         var bg = this.game.add.image(this.game.world.centerX, this.game.world.centerY, level.background);
         bg.anchor.setTo(0.5);
 
-        lastPosition = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
+        lastPosition = null;
         workPoint = new Phaser.Point();
         colors = Phaser.Color.HSVColorWheel();
         colorPos = 0;
@@ -90,6 +90,12 @@ world.prototype = {
 
         this.game.input.addMoveCallback(this.paint, this);
 
+        //Fix to make the game end if you lift your finger off the mobile screen
+        //Apparently simply checking input.isDown like in the paint method doesn't work for mobile
+        this.game.input.onUp.add(function(){
+                this.endLevel();
+                return;
+        }.bind(this));
 
 
         emitter = this.game.add.emitter(0, 0, 500);
@@ -108,11 +114,13 @@ world.prototype = {
     },
 
     paint: function (pointer, x, y) {
-            workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
-            emitter.position.x = workPoint.x;
-            emitter.position.y = workPoint.y;
-            cursorLoop.position.x = workPoint.x;
-            cursorLoop.position.y = workPoint.y;
+        workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
+        emitter.position.x = workPoint.x;
+        emitter.position.y = workPoint.y;
+        cursorLoop.position.x = workPoint.x;
+        cursorLoop.position.y = workPoint.y;
+
+        if(lastPosition == null) lastPosition = new Phaser.Point(workPoint.x, workPoint.y);
        
         if (pointer.isDown && inkAmount > 0) {
             //for game over check
