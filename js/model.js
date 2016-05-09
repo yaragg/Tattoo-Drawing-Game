@@ -33,72 +33,75 @@ model.prototype = {
         canvas.draw(tex, 0,0);
         var tats = [];
         for (var i = 0; i < save.levels.length; i++){
+			if (save.levels[i].bitmap == null) {
+				continue;
+			}
             tats.push(this.game.make.sprite(0,0, save.levels[i].file));
-			tats[i].anchor.set(0.5);
+			tats[tats.length -1].anchor.set(0.5);
             switch (i){
               case 0: 
-                tats[i].scale.set(0.1);
-                canvas.draw(tats[i], 585, 735);
+                tats[tats.length -1].scale.set(0.1);
+                canvas.draw(tats[tats.length -1], 585, 735);
                 break;
               case 1: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
               case 2: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 585, 680);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 585, 680);
                 break;
               case 3:
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 520, 900);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 520, 900);
                 break;
               case 4: // TODO: place / size tattoos from here down
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 520, 900);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 520, 900);
                 break;
               case 5: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
               case 6: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 585, 735);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 585, 735);
                 break;
               case 7:
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
               case 8: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 585, 735);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 585, 735);
                 break;
               case 9: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
               case 9: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 585, 735);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 585, 735);
                 break;
               case 10: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
               case 11: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 585, 735);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 585, 735);
                 break;
               case 12: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
               case 13: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 585, 735);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 585, 735);
                 break;
               case 14: 
-                tats[i].scale.setTo(0.05);
-                canvas.draw(tats[i], 290, 700);
+                tats[tats.length -1].scale.setTo(0.05);
+                canvas.draw(tats[tats.length -1], 290, 700);
                 break;
             }
         }
