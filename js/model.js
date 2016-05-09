@@ -34,132 +34,74 @@ model.prototype = {
         var tats = [];
         for (var i = 0; i < save.levels.length; i++){
             tats.push(this.game.make.sprite(0,0, save.levels[i].file));
-          
+			tats[i].anchor.set(0.5);
             switch (i){
               case 0: 
                 tats[i].scale.set(0.1);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 735);
                 break;
               case 1: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
               case 2: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 680);
                 break;
-              case 3: // TODO: place / size tattoos from her down
+              case 3:
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
-                canvas.draw(tats[i], 290, 700);
+                canvas.draw(tats[i], 520, 900);
                 break;
-              case 4: 
+              case 4: // TODO: place / size tattoos from here down
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
-                canvas.draw(tats[i], 585, 735);
+                canvas.draw(tats[i], 520, 900);
                 break;
               case 5: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
               case 6: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 735);
                 break;
               case 7:
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
               case 8: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 735);
                 break;
               case 9: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
               case 9: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 735);
                 break;
               case 10: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
               case 11: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 735);
                 break;
               case 12: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
               case 13: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 585, 735);
                 break;
               case 14: 
                 tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
                 canvas.draw(tats[i], 290, 700);
                 break;
             }
         }
-     
-        /*for (i = 0; i < save.levels.length; i++){
-          switch (i){
-              case 0: canvas.draw(tats[i], 585, 735);
-                tats[i].scale.set(0.1);
-                tats[i].anchor.set(0.5);
-                break;
-              case 1: canvas.draw(tats[i], 290, 700);
-                break;
-              case 2: canvas.draw(tats[i], 585, 680);
-                tats[i].scale.setTo(0.05);
-                tats[i].anchor.set(0.5);
-                //tats[i] = curTat;
-                break;
-              case 3: canvas.draw(tats[i], 290, 700);
-                break;
-              case 4: canvas.draw(tats[i], 585, 735);
-                break;
-              case 5: canvas.draw(tats[i], 290, 700);
-                break;
-              case 6: canvas.draw(tats[i], 585, 735);
-                break;
-              case 7: canvas.draw(tats[i], 290, 700);
-                break;
-              case 8: canvas.draw(tats[i], 585, 735);
-                break;
-              case 9: canvas.draw(tats[i], 290, 700);
-                break;
-              case 9: canvas.draw(tats[i], 585, 735);
-                break;
-              case 10: canvas.draw(tats[i], 290, 700);
-                break;
-              case 11: canvas.draw(tats[i], 585, 735);
-                break;
-              case 12: canvas.draw(tats[i], 290, 700);
-                break;
-              case 13: canvas.draw(tats[i], 585, 735);
-                break;
-              case 14: canvas.draw(tats[i], 290, 700);
-                break;
-            }
-        }*/
 
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(75

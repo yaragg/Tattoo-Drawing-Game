@@ -31,7 +31,10 @@ loading.prototype = {
             this.game.load.image('burst', 'assets/burst.png');
             this.game.load.image('texture', 'assets/Midel_UV.png');
             this.game.load.spritesheet('cursor', 'assets/cursor.png', 300, 300, 20);
-            
+			
+			// Todo: Move to level specific load
+            this.game.load.image('pimple', 'assets/pimple.png');
+			this.game.load.image('scrape', 'assets/scrape.png');
         }
 
 
