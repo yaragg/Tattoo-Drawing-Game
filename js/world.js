@@ -192,9 +192,9 @@ world.prototype = {
 			
         inkBarFill.width = inkAmount;
 
-        if ( cursorLoop.scale.x <= 0) {
-					this.endLevel();
-			}
+        if ( inkAmount <= 0) {
+            this.endLevel();
+        }
 		
     },
 	
