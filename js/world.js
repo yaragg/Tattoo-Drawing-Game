@@ -11,13 +11,15 @@ var world = function(game){
     var workPoint;
     var pointerDown;
     var points;
+    var pointsRemaining;
     var refills;
-		var inkBar;
-		var blocks;
-		var blocked;
-		var currBlock;
-		var stopPosition;
-		var stopTime;
+	var inkBar;
+	var blocks;
+	var blocked;
+	var currBlock;
+	var stopPosition;
+	var stopTime;
+    var withinBounds;
 };
 
 world.prototype = {
@@ -41,9 +43,9 @@ world.prototype = {
         workPoint = null;
         points = null;
         refills = null;
-				blocks = null;
-				currBlock = null;
-				stopPosition = null;
+		blocks = null;
+		currBlock = null;
+		stopPosition = null;
     },
     
     create: function(){
@@ -55,15 +57,18 @@ world.prototype = {
         var bg = this.game.add.image(this.game.world.centerX, this.game.world.centerY, level.background);
         bg.anchor.setTo(0.5);
 
-        lastPosition = new Phaser.Point(this.game.input.activePointer.x, this.game.input.activePointer.y);
+        lastPosition = null;
         workPoint = new Phaser.Point();
         colors = Phaser.Color.HSVColorWheel();
         colorPos = 0;
         pointerDown = false;
         
         //cursor
-        loop = this.game.make.sprite(0, 0, 'loop');
-        loop.scale.set(0.25);
+        loop = this.game.make.sprite(-500, -500, 'cursor');
+
+        //loop.animations.add('wobble');
+        //loop.animations.play('wobble',12,true);
+        loop.scale.set(0.1);
         loop.anchor.set(0.5);
         
         bmcanvas = this.game.add.bitmapData(this.game.width, this.game.height);
@@ -71,19 +76,24 @@ world.prototype = {
 
         bmcanvas.smoothed = false;
 
-				//ink
+		//ink
         inkAmount = 100;
         inkDecrease = level.inkDecrease;	// Amount of ink you loose per unit of distance
-				inkBar = this.game.add.bitmapData(inkAmount, 8);
-				this.game.add.sprite(10, 580, inkBar);
+		inkBar = this.game.add.bitmapData(inkAmount, 8);
+		this.game.add.sprite(10, 580, inkBar);
 		
-				blocked = false;
-				stopTime = 0;
-				blocks = [];
-				blocks.push(new dot(this.game, this.game.width/2, this.game.height/2, false));
+		blocked = false;
+		stopTime = 0;
+		blocks = [];
+		blocks.push(new block(this.game, this.game.width/2, this.game.height/2, true, 45));
+        inkBarBg = this.game.add.sprite(5, 575, 'bar_bg');
+        inkBarFill = this.game.add.sprite(10, 580, 'bar_fill');
+        inkBarBg.width = inkAmount+10;
+        inkBarFill.width = inkAmount;
+
         points = [];
         refills = [];
-
+				pointsRemaining = level.points.length;
         for (i = 0; i < level.points.length; i++) {
             var point = level.points[i];
             points.push(new dot(this.game, point.x, point.y, false));
@@ -96,9 +106,18 @@ world.prototype = {
 
         this.game.input.addMoveCallback(this.paint, this);
 
-        cursorLoop = this.game.add.sprite(0, 0, 'loop');
-        cursorLoop.scale.set(0.5);
-        cursorLoop.anchor.set(0.5);
+        //Fix to make the game end if you lift your finger off the mobile screen
+        //Apparently simply checking input.isDown like in the paint method doesn't work for mobile
+		//withinBounds = true;
+		document.addEventListener('onmouseout', function(){ withinBounds = false; });
+		document.addEventListener('onmouseover', function(){ withinBounds = true; });
+		
+        this.game.input.onUp.add(function(){
+            if (withinBounds && pointerDown)
+                this.endLevel();
+        }.bind(this));
+				
+
 
         emitter = this.game.add.emitter(0, 0, 500);
         emitter.makeParticles(['loop']);
@@ -107,18 +126,24 @@ world.prototype = {
         emitter.minParticleSpeed = new Phaser.Point(-50,-50);
         emitter.maxParticleSpeed = new Phaser.Point(50,50);
         emitter.start(false, 700, 5);
+
+        cursorLoop = this.game.add.sprite(0, 0, 'cursor');
+        cursorLoop.animations.add('wobble');
+        cursorLoop.animations.play('wobble',12,true);
+        cursorLoop.scale.set(0.15);
+        cursorLoop.anchor.set(0.5);
     },
 
     paint: function (pointer, x, y) {
-				workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
-				emitter.position.x = workPoint.x;
-				emitter.position.y = workPoint.y;
-				cursorLoop.position.x = workPoint.x;
+        workPoint.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
+        emitter.position.x = workPoint.x;
+        emitter.position.y = workPoint.y;
+        cursorLoop.position.x = workPoint.x;
         cursorLoop.position.y = workPoint.y;
-		
-				//if (Phaser.Point.distance(workPoint, , true)
-		
-        if (pointer.isDown && inkAmount > 0 && !blocked) {
+
+        if(lastPosition == null) lastPosition = new Phaser.Point(workPoint.x, workPoint.y);
+       
+        if (pointer.isDown && inkAmount > 0) {
             //for game over check
             pointerDown = true;
 
@@ -147,10 +172,15 @@ world.prototype = {
             this.checkPoints();
         } else {
             //Game over check
-            if (pointerDown && !blocked) {
+            if (pointerDown && withinBounds) {
                 this.endLevel();
                 return;
             }
+            //Game over check (unneeded with new listener)
+            //if (pointerDown && !withinBounds) {
+                //this.endLevel();
+                //return;
+            //}
         }
 				this.checkBlocked();
         lastPosition.setTo(x,y);
@@ -165,7 +195,7 @@ world.prototype = {
         }
 
         for (i = 0; i < refills.length; i++) {
-            if (Phaser.Point.distance(lastPosition, refills[i], true) < 20 &&
+            if (Phaser.Point.distance(lastPosition, refills[i], true) < refills[i].sprite.width/2 &&
                 refills[i].canRefill) {
                 inkAmount += refills[i].refillAmount;
                 refills[i].visit();
@@ -177,12 +207,12 @@ world.prototype = {
 		for (i = 0; i < blocks.length; i++) {
 			if (!blocked && Phaser.Point.distance(lastPosition, blocks[i], true) < 25 && pointerDown) {
 					stopPosition = new Phaser.Point(blocks[i].x, blocks[i].y);
-					stopTime = Phaser.Time.now;
+					stopTime = this.game.time.now;
 					blocked = true;
 					currBlock = blocks[i];
 					console.log("Blocked");
 			}
-			if (blocked && Phaser.Point.distance(lastPosition, stopPosition, true) < 20 && stopTime - Phaser.Time.now > 20 ) {
+			if (blocked && Phaser.Point.distance(lastPosition, stopPosition, true) < 20 && stopTime - this.game.time.now > 20 ) {
 					currBlock = null;
 					blocked = false;
 					console.log("Unblocked");
@@ -202,9 +232,18 @@ world.prototype = {
 		
 		inkBar.dirty = true;
 			
-		console.log("Time: " + Phaser.Time.now);
+		console.log("Time: " + this.game.time.now);
 		if (stopTime != null) console.log("Delay: " + stopTime);
+		
+        withinBounds = !(cursorLoop.x <= 0 || cursorLoop.y <= 0 ||
+        cursorLoop.x >= this.game.width || cursorLoop.y >= this.game.height);
+        
+        inkBarFill.width = inkAmount;
 
+        if ( inkAmount <= 0) {
+            this.endLevel();
+        }
+		
     },
 	
 	endLevel: function() {
@@ -216,19 +255,21 @@ world.prototype = {
             }
         }
         
-        //save bitmap TODO only on win
+        //save bitmap
         if (wonLevel) {
             var save = GetSave();
             for (i = 0; i < save.levels.length; i++) {
                 var level = save.levels[i];
-                if (level.name == currentLevel) {
+                if (level.file == currentLevel) {
                     level.bitmap = bmcanvas.canvas.toDataURL();
                     level.completed = true;
                     if (i < save.levels.length-1) {
                         save.levels[i+1].unlocked = true;
                     }
+                    save.levels[i] = level;
+                    break;
                 }
-                save.levels[i] = level;
+
             }
             SaveGame(save);
         }
@@ -248,21 +289,43 @@ var dot = function(game, x, y, refill){
     this.visited = false;
     this.x = x;
     this.y = y;
-    this.graphics = game.add.graphics(0,0);
+    
     if (refill) {
-        this.graphics.beginFill(0x00FF00, 1);
+        this.sprite = game.add.sprite(x,y,'ink');
+		this.sprite.scale.setTo(0.5);
+		this.sprite.anchor.setTo(0.5);
     }
     else {
-        this.graphics.beginFill(0x000000, 1);
+        this.sprite = game.add.sprite(x,y,'burst');
+        this.sprite.scale.setTo(0.25);
+        this.sprite.anchor.setTo(0.5);
     }
-
-    this.graphics.drawCircle(x, y, 10);
 };
 dot.prototype = Object.create(Phaser.Point.prototype);
 dot.prototype.constructor = dot;
 dot.prototype.visit = function() {
     //TODO particle effects?
+		if (!this.canRefill)
+			pointsRemaining -= 1;
     this.canRefill = false;
     this.visited = true;
-    this.graphics.alpha = 0.5;
+    this.sprite.alpha = 0.1;
 };
+
+var block = function(game, x, y, isPimple, angle){
+	if (isPimple){
+		this.sprite = game.add.sprite(x,y,'pimple');
+		this.sprite.anchor.setTo(0.5);
+		this.sprite.scale.setTo(0.5);
+	}
+	else {
+		this.sprite = game.add.sprite(x,y,'scrape');
+		this.sprite.anchor.setTo(0.5);
+		this.sprite.scale.setTo(0.5);
+		this.sprite.angle += angle;
+	}
+	//this.x = x;
+	//this.y = y;
+};
+block.prototype = Object.create(Phaser.Point.prototype);
+block.prototype.constructor = block;

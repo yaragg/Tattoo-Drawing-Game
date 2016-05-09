@@ -1,13 +1,12 @@
 {
-  "background":"background01",
+  "background":"Skin_Background",
   "points":[
     {"x":200,"y":500},
     {"x":400,"y":200},
     {"x":600,"y":500}
   ],
   "pickups":[
-    {"x":250,"y":250},
-    {"x":550,"y":250}
+
   ],
   "inkDecrease": 0.12
 }
