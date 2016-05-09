@@ -11,10 +11,10 @@ var world = function(game){
     var workPoint;
     var pointerDown;
     var points;
-		var pointsRemaining;
+    var pointsRemaining;
     var refills;
-		var inkBar;
-		var withinBounds;
+    var inkBar;
+    var withinBounds;
 };
 
 world.prototype = {
@@ -95,9 +95,8 @@ world.prototype = {
         //Fix to make the game end if you lift your finger off the mobile screen
         //Apparently simply checking input.isDown like in the paint method doesn't work for mobile
         this.game.input.onUp.add(function(){
-                if (pointsRemaining === 0 || inkAmount <= 0 || !withinBounds) 
-									this.endLevel();
-                return;
+            if (withinBounds)
+                this.endLevel();
         }.bind(this));
 			
 				//withinBounds = true;
@@ -157,11 +156,11 @@ world.prototype = {
 
             this.checkPoints();
         } else {
-            //Game over check
-            if (pointerDown && !withinBounds) {
-                this.endLevel();
-                return;
-            }
+            //Game over check (unneeded with new listener)
+            //if (pointerDown && !withinBounds) {
+                //this.endLevel();
+                //return;
+            //}
         }
         lastPosition.setTo(x,y);
     },
@@ -184,12 +183,9 @@ world.prototype = {
     },
 
     update: function() {
-				if (cursorLoop.x <= 0 || cursorLoop.y <= 0 || 
-					 cursorLoop.x >= this.game.width || cursorLoop.y >= this.game.height) { withinBounds = false; }
-				else
-						withinBounds = true;
-			
-			
+        withinBounds = !(cursorLoop.x <= 0 || cursorLoop.y <= 0 ||
+        cursorLoop.x >= this.game.width || cursorLoop.y >= this.game.height);
+        
         inkBarFill.width = inkAmount;
 
         if ( inkAmount <= 0) {

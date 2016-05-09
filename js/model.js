@@ -8,11 +8,7 @@ var model = function(game){
 model.prototype = {
 
     preload: function() {
-        this.game.load.image('texture', 'assets/Midel_UV.png');
         save = GetSave();
-        this.game.load.image(save.levels[0].file, save.levels[0].bitmap);
-        this.game.load.image(save.levels[1].file, save.levels[1].bitmap);
-    
     },
 
     dispose: function() {
@@ -192,8 +188,6 @@ model.prototype = {
                 mesh.children[0].material.map.needsUpdate = true;
                 mesh.children[0].geometry.computeFaceNormals();
                 mesh.children[0].geometry.computeVertexNormals();
-                //mesh.children[0].material = new THREE.MeshPhongMaterial( { map:canvas.canvas } );
-                console.log(mesh);
             } );
         });
         
