@@ -95,7 +95,7 @@ world.prototype = {
         //Fix to make the game end if you lift your finger off the mobile screen
         //Apparently simply checking input.isDown like in the paint method doesn't work for mobile
         this.game.input.onUp.add(function(){
-            if (withinBounds)
+            if (withinBounds && pointerDown)
                 this.endLevel();
         }.bind(this));
 			
