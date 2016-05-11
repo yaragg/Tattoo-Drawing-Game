@@ -60,7 +60,7 @@ world.prototype = {
 
         //loop.animations.add('wobble');
         //loop.animations.play('wobble',12,true);
-        loop.scale.set(0.1);
+        loop.scale.set(0.2);
         loop.anchor.set(0.5);
         
         bmcanvas = this.game.add.bitmapData(this.game.width, this.game.height);
@@ -116,7 +116,7 @@ world.prototype = {
         cursorLoop = this.game.add.sprite(0, 0, 'cursor');
         cursorLoop.animations.add('wobble');
         cursorLoop.animations.play('wobble',12,true);
-        cursorLoop.scale.set(0.15);
+        cursorLoop.scale.set(0.3);
         cursorLoop.anchor.set(0.5);
     },
 
