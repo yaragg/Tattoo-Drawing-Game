@@ -30,6 +30,7 @@ loading.prototype = {
             this.game.load.image('bar_bg', 'assets/bar_bg.png');
             this.game.load.image('burst', 'assets/burst.png');
             this.game.load.image('texture', 'assets/Midel_UV.png');
+            this.game.load.image('model_bg', 'assets/End_Background.png');
             this.game.load.spritesheet('cursor', 'assets/cursor.png', 300, 300, 20);
 			
 			// Todo: Move to level specific load

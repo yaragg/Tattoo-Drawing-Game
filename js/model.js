@@ -3,6 +3,8 @@ var model = function(game){
     var camera;
     var mesh;
     var save;
+    var pointerDown;
+    var previousPos;
 };
 
 model.prototype = {
@@ -20,6 +22,8 @@ model.prototype = {
 
     create: function(){
 
+        var bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'model_bg');
+        bg.anchor.setTo(0.5);
         var style = { font: "48px Arial", fill: "rgb(47, 63, 129)", align: "center"};
 
         //var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-70, "Background", style);
@@ -39,69 +43,71 @@ model.prototype = {
             tats.push(this.game.make.sprite(0,0, save.levels[i].file));
 			tats[tats.length -1].anchor.set(0.5);
             switch (i){
-              case 0: 
+              case 0: //triangle
                 tats[tats.length -1].scale.set(0.1);
-                canvas.draw(tats[tats.length -1], 585, 735);
+                canvas.draw(tats[tats.length -1], 117, 270);
                 break;
-              case 1: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
+              case 1: //double box
+                tats[tats.length -1].scale.setTo(0.15);
+                canvas.draw(tats[tats.length -1], 110, 660);
                 break;
-              case 2: 
+              case 2: //heart
                 tats[tats.length -1].scale.setTo(0.05);
                 canvas.draw(tats[tats.length -1], 585, 680);
                 break;
-              case 3:
+              case 3: //key
                 tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 520, 900);
+                canvas.draw(tats[tats.length -1], 520, 950);
                 break;
-              case 4: // TODO: place / size tattoos from here down
+              case 4: //tie
                 tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 520, 900);
+                  tats[tats.length-1].angle = 45;
+                canvas.draw(tats[tats.length -1], 450, 717);
                 break;
-              case 5: 
+              case 5: //burst
                 tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
+                canvas.draw(tats[tats.length -1], 600, 900);
                 break;
-              case 6: 
+              case 6: //swirl
+                tats[tats.length -1].scale.setTo(0.07);
+                canvas.draw(tats[tats.length -1], 561, 450);
+                break;
+              case 7: //skull
+                tats[tats.length -1].scale.setTo(0.05);
+                  tats[tats.length-1].angle = 180;
+                canvas.draw(tats[tats.length -1], 600, 330);
+                break;
+              case 8: //bone
+                tats[tats.length -1].scale.setTo(0.05);
+                  tats[tats.length-1].angle = 45;
+                canvas.draw(tats[tats.length -1], 650, 697);
+                break;
+              case 9: //pencil
+                tats[tats.length -1].scale.setTo(0.1);
+                canvas.draw(tats[tats.length -1], 287, 265);
+                break;
+              case 10: //cactus
+                tats[tats.length -1].scale.setTo(0.15);
+                  tats[tats.length-1].angle = 180;
+                canvas.draw(tats[tats.length -1], 550, 300);
+                break;
+              case 11: //shoe
                 tats[tats.length -1].scale.setTo(0.05);
                 canvas.draw(tats[tats.length -1], 585, 735);
                 break;
-              case 7:
+              case 12: //glasses
                 tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
+                  tats[tats.length-1].angle = 180;
+                canvas.draw(tats[tats.length -1], 528, 125);
                 break;
-              case 8: 
+              case 13: //ghost
                 tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 585, 735);
+                  tats[tats.length-1].angle = 180;
+                canvas.draw(tats[tats.length -1], 585, 280);
                 break;
-              case 9: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
-                break;
-              case 9: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 585, 735);
-                break;
-              case 10: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
-                break;
-              case 11: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 585, 735);
-                break;
-              case 12: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
-                break;
-              case 13: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 585, 735);
-                break;
-              case 14: 
-                tats[tats.length -1].scale.setTo(0.05);
-                canvas.draw(tats[tats.length -1], 290, 700);
+              case 14: //cat
+                tats[tats.length -1].scale.setTo(0.08);
+                canvas.draw(tats[tats.length -1], 530, 720);
                 break;
             }
         }
@@ -156,11 +162,35 @@ model.prototype = {
         style = { font: "24px Arial", fill: "#000000", align: "center"};
         text = this.game.add.text(playButton.x, playButton.y, "Back To Menu", style);
         text.anchor.set(0.5);
+
+        pointerDown = false;
+        previousPos = new Phaser.Point();
+        this.game.input.addMoveCallback(this.rotateModel, this);
+
+        this.game.input.onUp.add(function(){
+            pointerDown = false;
+        }.bind(this));
+
+        this.game.input.onDown.add(function(){
+            pointerDown = true;
+        }.bind(this));
+    },
+
+    rotateModel: function(pointer, x, y) {
+
+        if (pointerDown && !(previousPos.x == 0 && previousPos.y == 0) ) {
+            var deltaX = this.game.input.activePointer.x - previousPos.x;
+            if (mesh != null) {
+                mesh.rotateY(deltaX*0.01);
+            }
+        }
+
+        previousPos.setTo(this.game.input.activePointer.x, this.game.input.activePointer.y);
     },
 
     update: function() {
         
-        if (mesh != null)
+        if (mesh != null && !pointerDown)
             mesh.rotateY(0.005);
         modelRenderer.render(scene, camera);
         modelTexture.dirty();
