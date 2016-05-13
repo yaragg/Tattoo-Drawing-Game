@@ -52,5 +52,7 @@
             "y": 522,
             "color": "0xffc6c6"
         }
-    ]
+    ],
+  "obstacles":[
+  ]
 }

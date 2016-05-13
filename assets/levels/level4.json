@@ -16,5 +16,7 @@
     {"x":360,"y":430}
 
   ],
+  "obstacles":[
+  ],
   "inkDecrease": 0.11
 }
