@@ -8,6 +8,6 @@
   "pickups":[
 
   ],
-
+  "obstacles":[],
   "inkDecrease": 0.12
 }

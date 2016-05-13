@@ -22,27 +22,30 @@ endLevel.prototype = {
 	},
 
     create: function(){
-        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
-			
+        var bg = this.game.add.image(this.game.world.centerX, 0, 'menu_bg');
+        bg.anchor.setTo(0.5, 0);
+
+        var style = { font: "32px Arial", fill: "rgb(181, 245, 255)", align: "center"};
+
 		var tString = "";
 		if (wonLevel) {
 			tString = "Level Complete";
 		}else {
 			tString = "Game Over";
             var button = this.game.add.button(this.game.world.centerX,
-                this.game.world.height -150,"button",this.onRestartClicked,this, 1, 0, 2);
+                this.game.world.height -120,"button",this.onRestartClicked,this, 1, 0, 2);
             button.anchor.setTo(0.5,0.5);
 
             var tstyle = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
             var text = this.game.add.text(button.x, button.y, "Retry Level", tstyle);
             text.anchor.set(0.5);
 		}
-		
-		
+
+
 		var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY-100, tString, style);
 		text.anchor.set(0.5);
 
-        var tButton = this.game.add.button(this.game.world.centerX-120,
+        var tButton = this.game.add.button(this.game.world.centerX,
             this.game.world.height -50,"button",this.onPlayClicked,this, 1, 0, 2);
         tButton.anchor.setTo(0.5,0.5);
 
@@ -51,13 +54,16 @@ endLevel.prototype = {
         text.anchor.set(0.5);
 
         //view model
-        tButton = this.game.add.button(this.game.world.centerX+120,
-            this.game.world.height -50,"button",this.onModelClicked,this, 1, 0, 2);
-        tButton.anchor.setTo(0.5,0.5);
+        var save = GetSave();
+        if (save.levels[save.levels.length - 1].bitmap != null) {
+            tButton = this.game.add.button(this.game.world.centerX ,
+                this.game.world.height -190, "button", this.onModelClicked, this, 1, 0, 2);
+            tButton.anchor.setTo(0.5, 0.5);
 
-        style = { font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
-        text = this.game.add.text(tButton.x, tButton.y, "Model Test", style);
-        text.anchor.set(0.5);
+            style = {font: "24px Arial", fill: "rgb(47, 63, 129)", align: "center"};
+            text = this.game.add.text(tButton.x, tButton.y, "View Your Work", style);
+            text.anchor.set(0.5);
+        }
     },
 
     onRestartClicked: function() {

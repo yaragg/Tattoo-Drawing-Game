@@ -23,7 +23,10 @@ levelSelect.prototype = {
     },
     
     create: function(){
-        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
+        var bg = this.game.add.image(this.game.world.centerX, 0, 'menu_bg');
+        bg.anchor.setTo(0.5, 0);
+
+        var style = { font: "32px Arial", fill: "rgb(181, 245, 255)", align: "center"};
 
         var text = this.game.add.text(this.game.world.centerX, 30, "Level Select", style);
         text.anchor.set(0.5);
