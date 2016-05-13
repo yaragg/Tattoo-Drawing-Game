@@ -2,6 +2,7 @@ var world = function(game){
     var loop;
     var colorPos;
     var colors;
+    var colorSwap;
     var bmcanvas;
     var lastPosition;
     var cursorLoop;
@@ -45,6 +46,9 @@ world.prototype = {
         //level parsing
         var level = this.game.cache.getJSON(currentLevel);
 
+        //color swap
+        colorSwap = false;
+
         //background
         var bg = this.game.add.image(this.game.world.centerX, this.game.world.centerY, level.background);
         bg.anchor.setTo(0.5);
@@ -82,7 +86,12 @@ world.prototype = {
 				pointsRemaining = level.points.length;
         for (i = 0; i < level.points.length; i++) {
             var point = level.points[i];
-            points.push(new dot(this.game, point.x, point.y, false));
+            if (point.color != undefined) {
+                colorSwap = true;
+                points.push(new dot(this.game, point.x, point.y, false, parseInt(point.color)));
+            } else {
+                points.push(new dot(this.game, point.x, point.y, false, 0x000000));
+            }
         }
 
         for (i = 0; i < level.pickups.length; i++) {
@@ -118,6 +127,10 @@ world.prototype = {
         cursorLoop.animations.play('wobble',12,true);
         cursorLoop.scale.set(0.3);
         cursorLoop.anchor.set(0.5);
+
+        if (colorSwap) {
+            this.updateColor(0x000000);
+        }
     },
 
     paint: function (pointer, x, y) {
@@ -133,12 +146,8 @@ world.prototype = {
             //for game over check
             pointerDown = true;
 
-            //color
-            loop.tint = (colors[colorPos].r << 16) | (colors[colorPos].g << 8) | colors[colorPos].b;
-            colorPos = this.game.math.wrapValue(colorPos, 1, 359);
-        
-            for(var j=0; j<emitter.children.length; j++) emitter.children[j].tint = loop.tint;
-            cursorLoop.tint = loop.tint;
+
+            this.updateColor();
 			
 			//ink
 			var distance = Phaser.Point.distance(lastPosition, workPoint, true);
@@ -170,7 +179,16 @@ world.prototype = {
         for (i = 0; i < points.length; i++) {
             if (Phaser.Point.distance(lastPosition, points[i], true) < 20 &&
                 points[i].visited == false) {
-                points[i].visit();
+                if (colorSwap) {
+                    if (points[i].color == loop.tint ||
+                            loop.tint == 0x000000 ||
+                            points[i].color == 0x000000) {
+                        points[i].visit();
+                        this.updateColor(points[i].color);
+                    }
+                } else {
+                    points[i].visit();
+                }
             }
         }
 
@@ -193,6 +211,24 @@ world.prototype = {
             this.endLevel();
         }
 		
+    },
+
+    updateColor: function(color) {
+        //color
+        if (!colorSwap) {
+            loop.tint = (colors[colorPos].r << 16) | (colors[colorPos].g << 8) | colors[colorPos].b;
+            colorPos = this.game.math.wrapValue(colorPos, 1, 359);
+
+            for (var j = 0; j < emitter.children.length; j++) emitter.children[j].tint = loop.tint;
+            cursorLoop.tint = loop.tint;
+            return;
+        }
+
+        if (color != undefined) {
+            loop.tint = color;
+            for (var j = 0; j < emitter.children.length; j++) emitter.children[j].tint = loop.tint;
+            cursorLoop.tint = loop.tint;
+        }
     },
 	
 	endLevel: function() {
@@ -232,10 +268,11 @@ world.prototype = {
 
 };
 
-var dot = function(game, x, y, refill){
+var dot = function(game, x, y, refill, color){
     this.refillAmount = inkAmount/4;
     this.canRefill = refill;
     this.visited = false;
+    this.color = color;
     this.x = x;
     this.y = y;
     
@@ -246,6 +283,7 @@ var dot = function(game, x, y, refill){
     }
     else {
         this.sprite = game.add.sprite(x,y,'burst');
+        this.sprite.tint = this.color;
         this.sprite.scale.setTo(0.25);
         this.sprite.anchor.setTo(0.5);
     }
