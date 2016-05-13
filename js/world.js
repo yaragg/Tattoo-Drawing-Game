@@ -162,7 +162,7 @@ world.prototype = {
 
         if(lastPosition == null) lastPosition = new Phaser.Point(workPoint.x, workPoint.y);
        
-        if (pointer.isDown && inkAmount > 0) {
+        if (pointer.isDown && inkAmount > 0 && !blocked) {
             //for game over check
             pointerDown = true;
 
