@@ -30,6 +30,7 @@ loading.prototype = {
             this.game.load.image('loop', 'assets/brush.png');
             this.game.load.image('ink', 'assets/ink.png');
             this.game.load.image('bar_fill', 'assets/bar_fill.png');
+            this.game.load.image('bar_fill_extra', 'assets/bar_fill_extra.png');
             this.game.load.image('bar_bg', 'assets/bar_bg.png');
             this.game.load.image('burst', 'assets/burst.png');
             this.game.load.image('texture', 'assets/Midel_UV.png');
