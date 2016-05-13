@@ -217,9 +217,12 @@ world.prototype = {
 	},
 
 	checkBlocked: function() {
-		if (blocked && this.game.time.now - stopTime > 500) {
-			console.log(lastPosition);
-			if (Phaser.Point.distance(workPoint, stopPosition, true) < 15) {
+		if (blocked && this.game.time.now - stopTime > 5) {
+			//console.log(lastPosition);
+			var myBounds = blocks[currBlock].sprite.getBounds();
+			var cursorBounds = cursorLoop.getBounds();
+			var overlap = Phaser.Rectangle.intersects(myBounds, cursorBounds);
+			if (Phaser.Point.distance(workPoint, stopPosition, true) < 30 && !overlap) {
 				blocked = false;
 				currBlock = -1;
 				console.log('start');
@@ -232,7 +235,7 @@ world.prototype = {
 				if (overlap && !blocked) {
 					blocked = true;
 					currBlock = i;
-					stopPosition.setTo(workPoint.x - (lastPosition.x - workPoint.x), workPoint.y - (lastPosition.y - workPoint.y));
+					stopPosition.setTo(workPoint.x , workPoint.y);
 					console.log(stopPosition);
 					stopTime = this.game.time.now;
 					console.log('stopped');
