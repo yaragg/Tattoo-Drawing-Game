@@ -8,5 +8,8 @@
   "pickups":[
 
   ],
+  "obstacles": [
+    {"x":300,"y":350,"angle":45}
+  ],
   "inkDecrease": 0.12
 }
