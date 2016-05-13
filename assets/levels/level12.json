@@ -69,6 +69,7 @@
             "y": 507
         }
     ],
-  "obstacles":[
-  ]
+    "obstacles": [
+        {"x":610,"y":400,"angle":0}
+    ]
 }
