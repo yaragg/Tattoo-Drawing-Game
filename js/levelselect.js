@@ -17,16 +17,16 @@ levelSelect.prototype = {
             if (level.bitmap != null) {
                 var data = new Image();
                 data.src = level.bitmap;
-                this.game.cache.addImage(level.name, level.bitmap, data);
+                this.game.cache.addImage(level.file, level.bitmap, data);
             }
         }
     },
     
     create: function(){
-        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
+        var bg = this.game.add.image(this.game.world.centerX, 0, 'menu_bg');
+        bg.anchor.setTo(0.5, 0);
 
-
-
+        var style = { font: "32px Arial", fill: "rgb(181, 245, 255)", align: "center"};
 
         var text = this.game.add.text(this.game.world.centerX, 30, "Level Select", style);
         text.anchor.set(0.5);
@@ -41,7 +41,6 @@ levelSelect.prototype = {
         for (var i = 0; i < save.levels.length; i++) {
 
             var level = save.levels[i];
-            
             
             if (currentLevel == level.file) {
                 tPage = Math.floor(i/6);
@@ -65,7 +64,7 @@ levelSelect.prototype = {
 
             if (level.bitmap != null) {
                 var tSprite = tButton.addChild(this.game.make.sprite(0,
-                -120, level.name));
+                -120, level.file));
                 tSprite.anchor.setTo(0.5,0.5);
                 var tScale = 200/tSprite.width;
                 tSprite.scale.setTo(tScale,tScale);

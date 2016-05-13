@@ -14,6 +14,7 @@ splash.prototype = {
         // this.game.load.image('button', 'assets/button.png');
         this.game.load.spritesheet('button', 'assets/buttons.png', 200, 53);
         this.game.load.image('splash', 'assets/Main_Background.png');
+        this.game.load.image('menu_bg', 'assets/Buttons_Background.png');
 
         //TODO set to save before release
         var save = new DefaultSaveGame();

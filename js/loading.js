@@ -6,9 +6,12 @@ var loading = function(game){
 loading.prototype = {
 
     preload: function () {
+        var bg = this.game.add.image(this.game.world.centerX, 0, 'menu_bg');
+        bg.anchor.setTo(0.5, 0);
+
         //load assets for current level
-        var style = { font: "32px Arial", fill: "rgb(47, 63, 129)", align: "center"};
-        var text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Loading...", style);
+        var style = { font: "36px Arial", fill: "rgb(181, 245, 255)", align: "center"};
+        var text = this.game.add.text(this.game.world.centerX, this.game.world.height-50, "Loading...", style);
         text.anchor.set(0.5);
         //var loadingBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY+50,"loader");
         //loadingBar.anchor.setTo(0.5,0.5);
@@ -29,8 +32,14 @@ loading.prototype = {
             this.game.load.image('bar_fill', 'assets/bar_fill.png');
             this.game.load.image('bar_bg', 'assets/bar_bg.png');
             this.game.load.image('burst', 'assets/burst.png');
-            this.game.load.spritesheet('cursor', 'assets/cursor.png', 300, 300, 20);
-            
+            this.game.load.image('texture', 'assets/Midel_UV.png');
+            this.game.load.image('model_bg', 'assets/End_Background.png');
+            this.game.load.spritesheet('cursor', 'assets/cursor.png', 150, 150, 20);
+            //this.game.load.atlasJSONArray('cursor', 'assets/cursor.png', 'assets/cursor.json');
+			
+			// Todo: Move to level specific load
+            this.game.load.image('pimple', 'assets/pimple.png');
+			this.game.load.image('scrape', 'assets/scrape.png');
         }
 
 
