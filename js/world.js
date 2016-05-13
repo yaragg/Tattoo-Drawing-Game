@@ -8,6 +8,7 @@ var world = function(game) {
 	var cursorLoop;
 	var cursorEmitter;
 	var inkAmount;
+	var inkAmountMax;
 	var inkDecrease;
 	var workPoint;
 	var pointerDown;
@@ -81,7 +82,8 @@ world.prototype = {
         bmcanvas.smoothed = false;
 
 		//ink
-		inkAmount = 100;
+		inkAmountMax = 100;
+		inkAmount = inkAmountMax;
 		inkDecrease = level.inkDecrease; // Amount of ink you loose per unit of distance
 		inkBar = this.game.add.bitmapData(inkAmount, 8);
 		this.game.add.sprite(10, 580, inkBar);
@@ -96,6 +98,8 @@ world.prototype = {
 		inkBarFill = this.game.add.sprite(10, 580, 'bar_fill');
 		inkBarBg.width = inkAmount + 10;
 		inkBarFill.width = inkAmount;
+		inkBarFillExtra = this.game.add.sprite(10, 580, 'bar_fill_extra');
+		inkBarFillExtra.width = 0;
 
 		points = [];
 		refills = [];
@@ -214,6 +218,7 @@ world.prototype = {
 			if (Phaser.Point.distance(lastPosition, refills[i], true) < refills[i].sprite.width/2 &&
 				refills[i].canRefill) {
 				inkAmount += refills[i].refillAmount;
+				if(inkAmount > 2*inkAmountMax) inkAmount = 2*inkAmountMax;
 				refills[i].visit();
 			}
 		}
@@ -251,7 +256,9 @@ world.prototype = {
         withinBounds = !(cursorLoop.x <= 0 || cursorLoop.y <= 0 ||
         cursorLoop.x >= this.game.width || cursorLoop.y >= this.game.height);
         
-        inkBarFill.width = inkAmount;
+        inkBarFill.width = (inkAmount < inkAmountMax) ? inkAmount : inkAmountMax;
+        inkBarFillExtra.width = (inkAmount - 100>0) ? inkAmount - 100 : 0;
+
 
         if ( inkAmount <= 0) {
             this.endLevel();
